@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "904914835243",
+    "firebase_url": "https://mycocktail-96d06.firebaseio.com",
+    "project_id": "mycocktail-96d06",
+    "storage_bucket": "mycocktail-96d06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904914835243:android:9e1a3b64f4d63665",
+        "android_client_info": {
+          "package_name": "upsa.mimo.delfin.mycocktail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904914835243-gujnrhiote7nlor6c7q3uikrlu74klav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "upsa.mimo.delfin.mycocktail",
+            "certificate_hash": "b3fb265c790081eb5159d4f9ba1bd6cdb47bc344"
+          }
+        },
+        {
+          "client_id": "904914835243-g15ptoof02l2sc5ta3v8meh01bapnlka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "upsa.mimo.delfin.mycocktail",
+            "certificate_hash": "2ac22074b2097c70c2acdf578e869228a9902166"
+          }
+        },
+        {
+          "client_id": "904914835243-3v25arplho64h5c15f4eq3utmltgk54n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSFp56jRxwBQbngn_t4-4KB5HoaeAo1Bc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904914835243-3v25arplho64h5c15f4eq3utmltgk54n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

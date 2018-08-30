@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">VidVintage</string>
+    <string name="email">Email...</string>
+    <string name="password">Password</string>
+    <string name="log_in">Email Login</string>
+    <string name="facebook_login">Facebook Login</string>
+    <string name="create_account">Create account</string>
+    <string name="copyright">Created by Delfin Hernandez Ⓒ</string>
+    <string name="login_active_text">Login</string>
+</resources>
