@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Constants;
+import com.example.dhernandez.vidvintage.Utils.ScreenUtils;
 import com.example.dhernandez.vidvintage.presenter.ILoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
@@ -301,6 +302,7 @@ public class LoginActivity extends AppCompatActivity{
         if (show) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            ScreenUtils.hideSoftKeyboard(this);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }

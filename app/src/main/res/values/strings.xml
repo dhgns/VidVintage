@@ -7,4 +7,14 @@
     <string name="create_account">Create account</string>
     <string name="copyright">Created by Delfin Hernandez Ⓒ</string>
     <string name="login_active_text">Login</string>
+    <string name="section_title_rss">RSS</string>
+    <string name="loren_ipsum">Sed ut perspiciatis unde omniset qua coqui dolorem ipsum quia dolor sit amet, consectetur, adipSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci</string>
+    <string name="section_title_cocktails">Cocktails</string>
+    <string name="section_title_profile">Profile</string>
+    <string name="article_title">Article Title</string>
+    <string name="article_author_label">Autor :</string>
+    <string name="article_author">Article Author Names</string>
+    <string name="article_url_label">Url :</string>
+    <string name="article_url">http://europapress.com/feed...</string>
+
 </resources>
