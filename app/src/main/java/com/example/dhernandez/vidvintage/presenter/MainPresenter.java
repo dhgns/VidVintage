@@ -16,6 +16,7 @@ public class MainPresenter extends ViewModel implements IMainPresenter{
     public MainPresenter(){
 
         this.navigateTo = new MutableLiveData<>();
+        this.navigateTo.setValue(Constants.Screens.COCKTAILS_MENU);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class MainPresenter extends ViewModel implements IMainPresenter{
     }
 
     @Override
-    public void onCocktails() {
-        this.navigateTo.setValue(Constants.Screens.COCKTAILS);
+    public void onCocktailsMenu() {
+        this.navigateTo.setValue(Constants.Screens.COCKTAILS_MENU);
     }
 
     @Override

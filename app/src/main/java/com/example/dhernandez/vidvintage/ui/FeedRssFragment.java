@@ -30,6 +30,8 @@ import com.prof.rssparser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -48,8 +50,7 @@ public class FeedRssFragment extends Fragment {
     PresenterFactory presenterFactory;
     IFeedRssPresenter presenter;
 
-    private String urlString = "http://www.androidcentral.com/feed";
-
+    private String urlString =  getResources().getString(R.string.feedUrl);
 
     @BindView(R.id.recycle_view_rss)
     RecyclerView rss_recycler_view;
@@ -95,7 +96,6 @@ public class FeedRssFragment extends Fragment {
                 articlesAdapter.notifyDataSetChanged();
             }
         });
-
         presenter.getNavigateTo().observe(this, screen ->{
             if(screen != null){
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -159,7 +159,11 @@ public class FeedRssFragment extends Fragment {
                         articleTitle = articleTitle.replace("\n", "");
                     articleVO.setTitle(articleTitle);
 
-                    articleVO.setDescription(a.getDescription());
+                    String articleDescription = a.getDescription();
+                    if(articleDescription != null)
+                        articleDescription = formatArticleBody(articleDescription);
+                    articleVO.setDescription(articleDescription);
+
 
                     String articleUrl = a.getLink();
                     if(articleUrl != null)
@@ -181,6 +185,34 @@ public class FeedRssFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    /**
+     * This function will call an recursive function tha will remove the repeated "\n" in the article body
+     * @param articleDescription
+     * @return
+     */
+    private String formatArticleBody(String articleDescription) {
+        String ret;
+
+        Pattern p = Pattern.compile("[\n]{2,}");
+        ret = replaceRepeatedBreakLine(articleDescription, p);
+
+        return ret;
+    }
+
+    private String replaceRepeatedBreakLine(String s, Pattern p){
+        String ret = s;
+
+        Matcher m = p.matcher(s);
+
+        if(m.find()){
+            String toReplace = ret.substring(m.start(), m.end());
+            ret = replaceRepeatedBreakLine(ret.replace(toReplace, "\n\n"), p);
+        }
+
+        return ret;
 
     }
 

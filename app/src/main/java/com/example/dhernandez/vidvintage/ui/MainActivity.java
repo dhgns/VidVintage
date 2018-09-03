@@ -50,11 +50,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         presenter = ViewModelProviders.of(this, presenterFactory).get(MainPresenter.class);
 
         navigation.setOnNavigationItemSelectedListener(this);
+        //navigation.setSelectedItemId(R.id.navigation_rss);
 
-        Drawable bg_item = getResources().getDrawable(R.drawable.tool_bar_bg);
-
-        navigation.setSelectedItemId(R.id.navigation_cocktails);
-        navigation.setBackground(bg_item);
+        Drawable bg_nav_menu = getResources().getDrawable(R.drawable.tool_bar_bg);
+        navigation.setBackground(bg_nav_menu);
 
         ColorStateList colorStateList = getResources().getColorStateList(R.color.nav_buttons);
         navigation.setItemIconTintList(colorStateList);
@@ -73,19 +72,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     case RSS:
                         fragment = new FeedRssFragment();
                         break;
-                    case COCKTAILS:
-                        fragment = new CocktailsFragment();
+                    case COCKTAILS_MENU:
+                        fragment = new CocktailsMenuFragment();
                         break;
                 }
                 if(fragment != null){
-                    transaction.replace(R.id.container, fragment).commit();
-                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.container, fragment).addToBackStack(null).commit();
                 }else if(intent != null){
                     startActivity(intent);
                 }
                 presenter.getNavigateTo().setValue(null);
             }
         });
+
     }
 
     @Override
@@ -93,11 +92,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.navigation_rss:
                 presenter.onRss();
-                //transaction.replace(R.id.container, new RssFragment()).commit();
                 return true;
-            case R.id.navigation_cocktails:
-                presenter.onCocktails();
-                //transaction.replace(R.id.container, new CocktailsFragment()).commit();
+            case R.id.navigation_cocktails_menu:
+                presenter.onCocktailsMenu();
                 return true;
             case R.id.navigation_profile:
                 presenter.onProfile();

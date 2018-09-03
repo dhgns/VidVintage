@@ -5,5 +5,5 @@ package com.example.dhernandez.vidvintage.Utils;
  */
 
 public class Constants {
-    public enum Screens { MAIN, RSS, PROFILE, COCKTAILS, ARTICLE_DETAIL, LOGIN};
+    public enum Screens { MAIN, RSS, PROFILE, COCKTAILS_MENU, ARTICLE_DETAIL, LOGIN};
 }

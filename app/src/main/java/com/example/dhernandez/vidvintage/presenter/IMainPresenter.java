@@ -14,7 +14,7 @@ public interface IMainPresenter {
 
     void onRss();
 
-    void onCocktails();
+    void onCocktailsMenu();
 
     void onProfile();
 }

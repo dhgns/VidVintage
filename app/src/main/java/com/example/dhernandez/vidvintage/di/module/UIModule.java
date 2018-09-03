@@ -1,6 +1,7 @@
 package com.example.dhernandez.vidvintage.di.module;
 
 import com.example.dhernandez.vidvintage.ui.ArticleDetailFragment;
+import com.example.dhernandez.vidvintage.ui.CocktailsMenuFragment;
 import com.example.dhernandez.vidvintage.ui.FeedRssFragment;
 import com.example.dhernandez.vidvintage.ui.SplashActivity;
 import com.example.dhernandez.vidvintage.ui.LoginActivity;
@@ -31,6 +32,9 @@ public abstract class UIModule {
 
     @ContributesAndroidInjector
     abstract ArticleDetailFragment bindArticleDetailFragment();
+
+    @ContributesAndroidInjector
+    abstract CocktailsMenuFragment bindCocktailsMenuFragment();
 
 
 }

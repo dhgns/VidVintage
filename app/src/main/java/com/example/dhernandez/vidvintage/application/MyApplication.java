@@ -21,6 +21,8 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MyApplication extends Application implements HasActivityInjector, HasSupportFragmentInjector {
 
+    //We are going to let Dagger the providing of activities and fragments
+
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
     @Inject
@@ -46,11 +48,12 @@ public class MyApplication extends Application implements HasActivityInjector, H
 
     }
 
-
     public static IApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
 
+
+    //We need to override these methods to set Dagger as the owner of activities and fragments providing
     @Override
     public AndroidInjector<Activity> activityInjector() {
         return dispatchingAndroidInjector;

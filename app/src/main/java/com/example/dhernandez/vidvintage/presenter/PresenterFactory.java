@@ -46,6 +46,9 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
         }if (modelClass.isAssignableFrom(FeedRssPresenter.class)) {
             //noinspection unchecked
             return (T) new FeedRssPresenter(feedArticles);
+        }if (modelClass.isAssignableFrom(CocktailsMenuPresenter.class)) {
+            //noinspection unchecked
+            return (T) new CocktailsMenuPresenter();
         }else{
             throw new IllegalArgumentException("Unknown ViewModel class".concat(modelClass.getCanonicalName()));
         }

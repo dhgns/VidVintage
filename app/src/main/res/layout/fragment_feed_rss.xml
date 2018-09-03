@@ -12,12 +12,12 @@
         android:id="@+id/tool_bar_cocktails"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tool_bar_heigth"
-        android:background="@drawable/background_toolbar"
+        android:background="@drawable/tool_bar_bg"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:theme="?attr/actionBarTheme">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <LinearLayout
             android:layout_width="match_parent"

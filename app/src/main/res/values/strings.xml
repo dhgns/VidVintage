@@ -16,5 +16,6 @@
     <string name="article_author">Article Author Names</string>
     <string name="article_url_label">Url :</string>
     <string name="article_url">http://europapress.com/feed...</string>
+    <string name="feedUrl">https://www.abarabove.com/feed</string>
 
 </resources>

@@ -7,7 +7,7 @@
         android:title="@string/section_title_rss" />
 
     <item
-        android:id="@+id/navigation_cocktails"
+        android:id="@+id/navigation_cocktails_menu"
         android:icon="@drawable/section_title_cocktails"
         android:title="@string/section_title_cocktails" />
 
