@@ -45,12 +45,11 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class FeedRssFragment extends Fragment {
 
-
     @Inject
     PresenterFactory presenterFactory;
     IFeedRssPresenter presenter;
 
-    private String urlString =  getResources().getString(R.string.feedUrl);
+    private String urlString;
 
     @BindView(R.id.recycle_view_rss)
     RecyclerView rss_recycler_view;
@@ -70,6 +69,15 @@ public class FeedRssFragment extends Fragment {
 
         // Generate the presenter with activity context to share it with the article detail fragment
         presenter = ViewModelProviders.of(getActivity(),presenterFactory).get(FeedRssPresenter.class);
+
+        urlString =  getResources().getString(R.string.feedUrl);
+        urlString = "https://www.reddit.com/r/cocktails/.rss";
+        urlString = "http://www.europapress.es/rss/rss.aspx?ch=00564";
+        urlString = "http://rss.cnn.com/rss/edition_sport.rss";
+        urlString = "https://www.cocacolaespana.es/Feeds/standard-rss-feed.xml";
+        urlString = "http://rss.cnn.com/rss/edition.rss";
+        urlString = "https://www.nasa.gov/rss/dyn/educationnews.rss";
+        urlString = "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml";
 
     }
 
@@ -110,12 +118,22 @@ public class FeedRssFragment extends Fragment {
                 }
             }
         });
+        presenter.showReadingProgress().observe(this, this::showProgress);
+        presenter.showFeedReadError().observe(this, this::showFeedError);
 
         return view;
     }
 
+    private void showFeedError(Boolean show) {
+        if(show){
+            Toast.makeText(getContext(), "Error reading Feed",
+                    Toast.LENGTH_SHORT).show();
+            presenter.showFeedReadError().setValue(false);
+        }
+    }
+
     private void setUpRecyclerView() {
-        articlesAdapter = new ArticlesAdapter(getContext(), articles);
+        articlesAdapter = new ArticlesAdapter(articles);
 
         articlesAdapter.setOnClickListener(new RecyclerView.OnClickListener() {
             @Override
@@ -132,13 +150,13 @@ public class FeedRssFragment extends Fragment {
     private void readFeed() {
         Parser parser = new Parser();
 
-        showProgress(true);
+        presenter.showReadingProgress().setValue(true);
 
         parser.execute(urlString);
         parser.onFinish(new Parser.OnTaskCompleted() {
             @Override
             public void onTaskCompleted(ArrayList<Article> list) {
-                showProgress(false);
+                presenter.showReadingProgress().setValue(false);
 
                 ArrayList<ArticleVO> readResult = new ArrayList<>();
                 for(Article a : list){
@@ -180,9 +198,9 @@ public class FeedRssFragment extends Fragment {
 
             @Override
             public void onError() {
-                showProgress(false);
-                Toast.makeText(getContext(), "Error reading Feed",
-                        Toast.LENGTH_SHORT).show();
+                presenter.showReadingProgress().postValue(false);
+                presenter.showFeedReadError().postValue(true);
+
             }
         });
 

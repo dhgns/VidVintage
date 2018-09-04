@@ -17,11 +17,16 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
     private MutableLiveData<List<ArticleVO>> feedArticles;
     private final MutableLiveData<ArticleVO> articleClicked;
     private MutableLiveData<Constants.Screens> navigateTo;
+    private MutableLiveData<Boolean> showProgress;
+    private MutableLiveData<Boolean> showFeedReadError;
 
     public FeedRssPresenter(MutableLiveData<List<ArticleVO>> feedArticles){
         this.feedArticles = feedArticles;
         this.articleClicked = new MutableLiveData<>();
         this.navigateTo = new MutableLiveData<>();
+        this.showProgress = new MutableLiveData<>();
+        this.showFeedReadError = new MutableLiveData<>();
+        this.showFeedReadError.setValue(false);
     }
 
     @Override
@@ -44,5 +49,15 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
     @Override
     public MutableLiveData<Constants.Screens> getNavigateTo(){
         return this.navigateTo;
+    }
+
+    @Override
+    public MutableLiveData<Boolean> showReadingProgress() {
+        return this.showProgress;
+    }
+
+    @Override
+    public MutableLiveData<Boolean> showFeedReadError() {
+        return this.showFeedReadError;
     }
 }

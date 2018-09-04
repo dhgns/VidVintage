@@ -8,6 +8,8 @@
     <color name="background_color">#313F56</color>
     <color name="font_color_forms">#313F56</color>
     <color name="search_form_edit_text_background_color">#ebebeb</color>
+    <color name="tag_bg_color">#af545e62</color>
+    <color name="transparent">#00000000</color>
 
 
 </resources>

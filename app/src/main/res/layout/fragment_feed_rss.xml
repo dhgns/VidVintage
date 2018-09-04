@@ -8,11 +8,12 @@
     tools:context=".ui.MainActivity"
     android:id="@+id/rss_layout">
 
+       <!-- android:background="@drawable/tool_bar_bg" !-->
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/tool_bar_cocktails"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tool_bar_heigth"
-        android:background="@drawable/tool_bar_bg"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         presenter = ViewModelProviders.of(this, presenterFactory).get(MainPresenter.class);
 
         navigation.setOnNavigationItemSelectedListener(this);
-        //navigation.setSelectedItemId(R.id.navigation_rss);
+        navigation.setSelectedItemId(R.id.navigation_cocktails_menu);
 
         Drawable bg_nav_menu = getResources().getDrawable(R.drawable.tool_bar_bg);
         navigation.setBackground(bg_nav_menu);
@@ -75,9 +75,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     case COCKTAILS_MENU:
                         fragment = new CocktailsMenuFragment();
                         break;
+                    case GIN_MENU:
+                    case RUM_MENU:
+                    case WHISKY_MENU:
+                    case OTHER_MENU:
+                        fragment = new MenuListFragment();
+                        break;
                 }
                 if(fragment != null){
-                    transaction.replace(R.id.container, fragment).addToBackStack(null).commit();
+                    transaction.replace(R.id.main_container, fragment).addToBackStack(null).commit();
                 }else if(intent != null){
                     startActivity(intent);
                 }

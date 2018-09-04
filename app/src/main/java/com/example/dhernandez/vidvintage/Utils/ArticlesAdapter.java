@@ -23,20 +23,16 @@ import java.util.List;
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArcticlesAdapterHolder>
         implements RecyclerView.OnClickListener {
 
-    private Context context;
     private List<ArticleVO> articleVOS;
-    private RecyclerView rv;
     private RecyclerView.OnClickListener listener;
 
-    public ArticlesAdapter(Context context, List<ArticleVO> articleVOS){
-        this.context = context;
+    public ArticlesAdapter(List<ArticleVO> articleVOS){
         this.articleVOS = articleVOS;
     }
 
     @Override
     public void onAttachedToRecyclerView( RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        this.rv = recyclerView;
     }
 
 

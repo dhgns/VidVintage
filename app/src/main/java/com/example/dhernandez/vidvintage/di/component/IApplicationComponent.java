@@ -7,6 +7,7 @@ import com.example.dhernandez.vidvintage.di.module.UIModule;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 
 import javax.inject.Singleton;
@@ -41,5 +42,7 @@ public interface IApplicationComponent {
     void inject(MainPresenter mainPresenter);
 
     void inject(FeedRssPresenter feedRssPresenter);
+
+    void inject(MenuListPresenter menuListPresenter);
 
 }

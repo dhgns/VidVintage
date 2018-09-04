@@ -72,15 +72,23 @@ dependencies {
     //RSS
     implementation 'com.prof.rssparser:rssparser:1.4.1'
 
-    //Firebase
+    // Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:converter-simplexml:2.4.0'
 
-    //Facebook
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okio:okio:1.14.0'
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
 
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'

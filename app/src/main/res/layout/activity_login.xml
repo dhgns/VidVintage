@@ -19,11 +19,9 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@drawable/background"
-        android:alpha="0.4"
+        android:src="@drawable/cocktail_menu_item_bg"
+        android:alpha="0.7"
         android:id="@+id/login_view_bg"/>
-
-
 
     <!-- Login Layout content -->
 

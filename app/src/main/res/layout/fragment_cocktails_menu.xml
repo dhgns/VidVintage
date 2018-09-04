@@ -2,15 +2,18 @@
 <android.support.constraint.ConstraintLayout
     android:id="@+id/cocktails_menu_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/cocktail_menu_item_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--TODO: replace the 4 images for a grid layout-->
+
     <android.support.v7.widget.Toolbar
+        android:background="@drawable/tool_bar_bg"
         android:id="@+id/cocktails_menu_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tool_bar_heigth"
-        android:background="@drawable/tool_bar_bg"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
@@ -67,12 +70,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:background="@android:color/black"
+        android:elevation="10dp"
+        android:background="@drawable/cocktail_menu_item_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cocktails_menu_toolbar">
 
         <ImageButton
-            android:id="@+id/ginsSection"
+            android:id="@+id/cocktail_menu_gin_section"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="64dp"
@@ -81,13 +85,13 @@
             android:scaleType="fitXY"
             android:src="@drawable/gin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/whiskysSection"
+            app:layout_constraintEnd_toEndOf="@id/cocktail_menu_whisky_section"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/whiskysSection" />
+            app:layout_constraintTop_toBottomOf="@+id/cocktail_menu_whisky_section" />
 
         <ImageButton
-            android:id="@+id/whiskysSection"
+            android:id="@+id/cocktail_menu_whisky_section"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -95,14 +99,14 @@
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/whisky"
-            app:layout_constraintBottom_toTopOf="@+id/ginsSection"
-            app:layout_constraintEnd_toStartOf="@id/rumsSection"
+            app:layout_constraintBottom_toTopOf="@+id/cocktail_menu_gin_section"
+            app:layout_constraintEnd_toStartOf="@id/cocktail_menu_rum_section"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/rumsSection"
+            android:id="@+id/cocktail_menu_rum_section"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
@@ -110,13 +114,13 @@
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/rum"
-            app:layout_constraintBottom_toTopOf="@id/othersSection"
+            app:layout_constraintBottom_toTopOf="@id/cocktail_menu_other_section"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/whiskysSection"
+            app:layout_constraintStart_toEndOf="@+id/cocktail_menu_whisky_section"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/othersSection"
+            android:id="@+id/cocktail_menu_other_section"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="64dp"
@@ -127,8 +131,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ginsSection"
-            app:layout_constraintTop_toBottomOf="@+id/rumsSection" />
+            app:layout_constraintStart_toEndOf="@+id/cocktail_menu_gin_section"
+            app:layout_constraintTop_toBottomOf="@+id/cocktail_menu_rum_section" />
 
     </android.support.constraint.ConstraintLayout>
 

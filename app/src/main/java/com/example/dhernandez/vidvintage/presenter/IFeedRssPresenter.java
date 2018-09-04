@@ -20,4 +20,8 @@ public interface IFeedRssPresenter {
     MutableLiveData<ArticleVO> getArticleClicked();
 
     MutableLiveData<Constants.Screens> getNavigateTo();
+
+    MutableLiveData<Boolean> showReadingProgress();
+
+    MutableLiveData<Boolean> showFeedReadError();
 }
