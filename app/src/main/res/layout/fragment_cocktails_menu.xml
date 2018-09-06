@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    android:id="@+id/cocktails_menu_layout"
+<android.support.constraint.ConstraintLayout android:id="@+id/cocktails_menu_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/cocktail_menu_item_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--TODO: replace the 4 images for a grid layout-->
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:background="@drawable/tool_bar_bg"
@@ -66,82 +62,83 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.constraint.ConstraintLayout
-        android:visibility="visible"
-        android:id="@+id/cocktails_menu_container"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:elevation="10dp"
-        android:background="@drawable/cocktail_menu_item_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cocktails_menu_toolbar">
+        android:layout_marginBottom="58dp"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/cocktail_menu_gin_section"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="64dp"
-            android:layout_marginStart="8dp"
-            android:padding="15dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/gin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/cocktail_menu_whisky_section"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cocktail_menu_whisky_section" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/cocktail_menu_whisky_section"
-            android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/cocktail_menu_gin_section"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/gin"/>
+
+            <ImageButton
+                android:id="@+id/cocktail_menu_whisky_section"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/whisky"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:padding="15dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/whisky"
-            app:layout_constraintBottom_toTopOf="@+id/cocktail_menu_gin_section"
-            app:layout_constraintEnd_toStartOf="@id/cocktail_menu_rum_section"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/cocktail_menu_rum_section"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="12dp"
-            android:padding="15dp"
+            <ImageButton
+                android:id="@+id/cocktail_menu_other_section"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:paddingTop="5dp"
+                android:paddingBottom="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/rum" />
 
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/rum"
-            app:layout_constraintBottom_toTopOf="@id/cocktail_menu_other_section"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cocktail_menu_whisky_section"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/cocktail_menu_rum_section"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:paddingTop="5dp"
+                android:paddingBottom="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/others" />
 
-        <ImageButton
-            android:id="@+id/cocktail_menu_other_section"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="64dp"
-            android:layout_marginEnd="8dp"
-            android:padding="15dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/others"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/cocktail_menu_gin_section"
-            app:layout_constraintTop_toBottomOf="@+id/cocktail_menu_rum_section" />
+        </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
-
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

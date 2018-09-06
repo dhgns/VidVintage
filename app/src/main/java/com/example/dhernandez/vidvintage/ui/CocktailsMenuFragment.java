@@ -10,12 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.ImageAdapter;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.ICocktailsMenuPresenter;
@@ -25,7 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
@@ -49,7 +44,7 @@ public class CocktailsMenuFragment extends Fragment {
         AndroidSupportInjection.inject(this);
 
         // Generate the presenter with activity context to share it with the article detail fragment
-        presenter = ViewModelProviders.of(getActivity(),presenterFactory).get(CocktailsMenuPresenter.class);
+        presenter = ViewModelProviders.of(getActivity(), presenterFactory).get(CocktailsMenuPresenter.class);
     }
 
     @Nullable
@@ -59,12 +54,12 @@ public class CocktailsMenuFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        presenter.getCocktailsList().observe(this, cocktails ->{
+        presenter.getCocktailsList().observe(this, cocktails -> {
             this.cocktails = cocktails;
         });
 
-        presenter.getNavigateTo().observe(this, screen->{
-            if(screen != null){
+        presenter.getNavigateTo().observe(this, screen -> {
+            if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -76,7 +71,7 @@ public class CocktailsMenuFragment extends Fragment {
                     case OTHER_MENU:
                         fragment = new MenuListFragment();
                 }
-                if(fragment != null){
+                if (fragment != null) {
                     transaction.replace(container.getId(), fragment).addToBackStack(null).commit();
                     presenter.getNavigateTo().setValue(null);
                 }
@@ -84,25 +79,34 @@ public class CocktailsMenuFragment extends Fragment {
 
         });
 
+        setUpGridView();
+
         return view;
     }
 
+    private void setUpGridView() {
+
+    }
+
     @OnClick(R.id.cocktail_menu_gin_section)
-    public void onGinSectionClick(){
+    public void onGinSectionClick() {
         presenter.onGinSectionClick();
     }
+
     @OnClick(R.id.cocktail_menu_rum_section)
-    public void onRumSectionClick(){
+    public void onRumSectionClick() {
         presenter.onRumSectionClick();
 
     }
+
     @OnClick(R.id.cocktail_menu_whisky_section)
-    public void onWhiskySectionClick(){
+    public void onWhiskySectionClick() {
         presenter.onWhiskySectionClick();
 
     }
+
     @OnClick(R.id.cocktail_menu_other_section)
-    public void onOtherSectionClick(){
+    public void onOtherSectionClick() {
         presenter.onOtherSectionClick();
 
     }
