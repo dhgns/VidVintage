@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,29 +38,30 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by dhernandez on 30/08/2018.
  */
 
-public class FeedRssFragment extends Fragment {
+public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     PresenterFactory presenterFactory;
     IFeedRssPresenter presenter;
 
-    private String urlString;
-
     @BindView(R.id.recycle_view_rss)
     RecyclerView rss_recycler_view;
 
     private List<ArticleVO> articles;
-
     private ArticlesAdapter articlesAdapter;
 
     @BindView(R.id.feed_rss_view_progress_bar)
     ProgressBar progressView;
+
+    @BindView(R.id.feed_rss_view_swipelayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,15 +71,6 @@ public class FeedRssFragment extends Fragment {
 
         // Generate the presenter with activity context to share it with the article detail fragment
         presenter = ViewModelProviders.of(getActivity(),presenterFactory).get(FeedRssPresenter.class);
-
-        urlString =  getResources().getString(R.string.feedUrl);
-        urlString = "https://www.reddit.com/r/cocktails/.rss";
-        urlString = "http://www.europapress.es/rss/rss.aspx?ch=00564";
-        urlString = "http://rss.cnn.com/rss/edition_sport.rss";
-        urlString = "https://www.cocacolaespana.es/Feeds/standard-rss-feed.xml";
-        urlString = "http://rss.cnn.com/rss/edition.rss";
-        urlString = "https://www.nasa.gov/rss/dyn/educationnews.rss";
-        urlString = "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml";
 
     }
 
@@ -92,8 +85,7 @@ public class FeedRssFragment extends Fragment {
 
         this.articles = presenter.getFeedArticles().getValue();
 
-        if(articles == null || articles.isEmpty())
-            readFeed();
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         setUpRecyclerView();
 
@@ -102,6 +94,7 @@ public class FeedRssFragment extends Fragment {
                 this.articles = articleVOS;
                 articlesAdapter.setListSource(articles);
                 articlesAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         presenter.getNavigateTo().observe(this, screen ->{
@@ -118,7 +111,11 @@ public class FeedRssFragment extends Fragment {
                 }
             }
         });
-        presenter.showReadingProgress().observe(this, this::showProgress);
+        presenter.showReadingProgress().observe(this, showProgress->{
+            if(showProgress){
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
         presenter.showFeedReadError().observe(this, this::showFeedError);
 
         return view;
@@ -147,96 +144,15 @@ public class FeedRssFragment extends Fragment {
 
     }
 
-    private void readFeed() {
-        Parser parser = new Parser();
-
-        presenter.showReadingProgress().setValue(true);
-
-        parser.execute(urlString);
-        parser.onFinish(new Parser.OnTaskCompleted() {
-            @Override
-            public void onTaskCompleted(ArrayList<Article> list) {
-                presenter.showReadingProgress().setValue(false);
-
-                ArrayList<ArticleVO> readResult = new ArrayList<>();
-                for(Article a : list){
-                    ArticleVO articleVO = new ArticleVO();
-
-                    String urlImage = a.getImage();
-                    if(urlImage != null)
-                        urlImage = urlImage.replace("\n", "");
-                    articleVO.setArticleImageURL(urlImage);
-
-                    String authorName = a.getAuthor();
-                    if(authorName != null)
-                        authorName = authorName.replace("\n", "");
-                    articleVO.setAuthor(authorName);
-
-                    String articleTitle = a.getTitle();
-                    if(articleTitle != null)
-                        articleTitle = articleTitle.replace("\n", "");
-                    articleVO.setTitle(articleTitle);
-
-                    String articleDescription = a.getDescription();
-                    if(articleDescription != null)
-                        articleDescription = formatArticleBody(articleDescription);
-                    articleVO.setDescription(articleDescription);
-
-
-                    String articleUrl = a.getLink();
-                    if(articleUrl != null)
-                        articleUrl = articleUrl.replace("\n", "");
-                    articleVO.setUrl(articleUrl);
-
-                    readResult.add(articleVO);
-                }
-
-                if(!readResult.isEmpty()) {
-                    presenter.getFeedArticles().setValue(readResult);
-                }
-            }
-
-            @Override
-            public void onError() {
-                presenter.showReadingProgress().postValue(false);
-                presenter.showFeedReadError().postValue(true);
-
-            }
-        });
-
-    }
-
-    /**
-     * This function will call an recursive function tha will remove the repeated "\n" in the article body
-     * @param articleDescription
-     * @return
-     */
-    private String formatArticleBody(String articleDescription) {
-        String ret;
-
-        Pattern p = Pattern.compile("[\n]{2,}");
-        ret = replaceRepeatedBreakLine(articleDescription, p);
-
-        return ret;
-    }
-
-    private String replaceRepeatedBreakLine(String s, Pattern p){
-        String ret = s;
-
-        Matcher m = p.matcher(s);
-
-        if(m.find()){
-            String toReplace = ret.substring(m.start(), m.end());
-            ret = replaceRepeatedBreakLine(ret.replace(toReplace, "\n\n"), p);
-        }
-
-        return ret;
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @OnClick(R.id.refresh_button_feed)
+    public void forceFeedRefresh(){
+        swipeRefreshLayout.setRefreshing(true);
+        this.onRefresh();
     }
 
     private void onArticleClick(int childAdapterPosition) {
@@ -274,5 +190,10 @@ public class FeedRssFragment extends Fragment {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.refreshFeed();
     }
 }

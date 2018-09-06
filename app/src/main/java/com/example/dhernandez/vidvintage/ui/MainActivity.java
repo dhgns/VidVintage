@@ -12,8 +12,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
+import com.example.dhernandez.vidvintage.Utils.ImageAdapter;
 import com.example.dhernandez.vidvintage.presenter.IMainPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+
 
 
     @Override
@@ -93,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -103,10 +110,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 presenter.onCocktailsMenu();
                 return true;
             case R.id.navigation_profile:
-                presenter.onProfile();
+                //TODO: remove this alert
+                this.profileSection();
+                //presenter.onProfile();
                 return true;
         }
         return false;
+    }
+
+    private void profileSection() {
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.not_supported),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -24,4 +24,8 @@ public interface IFeedRssPresenter {
     MutableLiveData<Boolean> showReadingProgress();
 
     MutableLiveData<Boolean> showFeedReadError();
+
+    void readFeed();
+
+    void refreshFeed();
 }

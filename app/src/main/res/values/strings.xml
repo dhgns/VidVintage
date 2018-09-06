@@ -21,5 +21,6 @@
     <string name="tags">Tags: </string>
     <string name="cocktail_menu_item_title">Sex on the Beach</string>
     <string name="cocktail_menu_item_description">One of the most tipical cocktails, base on pineapple juice and vodka, so fresh and addictive. Try it out!</string>
+    <string name="not_supported">Not supported yet. Available in TFM</string>
 
 </resources>

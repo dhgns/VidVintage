@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
+import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
@@ -25,6 +26,9 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter{
     private MutableLiveData<Boolean> showFormFields;
 
     public LoginPresenter(){
+        //Import the presenter in the application component to make The job of Dagger
+        //a little bit easier by the time it will have to resolve dependencies
+        MyApplication.getApplicationComponent().inject(this);
 
         this.showFormFields = new MutableLiveData<>();
         this.showLoginError = new MutableLiveData<>();
@@ -36,7 +40,7 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter{
         this.mailError.setValue(false);
         this.passwordError.setValue(false);
         this.showLoginError.setValue(false);
-        this.showFormFields.setValue(false);
+        this.showFormFields.setValue(true);
         this.showProgress.setValue(false);
 
         checkUserSession();

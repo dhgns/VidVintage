@@ -10,8 +10,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
+import com.example.dhernandez.vidvintage.Utils.ImageAdapter;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.ICocktailsMenuPresenter;
@@ -21,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
@@ -34,6 +39,7 @@ public class CocktailsMenuFragment extends Fragment {
     @Inject
     PresenterFactory presenterFactory;
     ICocktailsMenuPresenter presenter;
+
     private List<Cocktail> cocktails;
 
     @Override

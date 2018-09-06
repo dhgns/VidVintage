@@ -4,6 +4,7 @@ import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.di.module.ApplicationModule;
 import com.example.dhernandez.vidvintage.di.module.UIDataModule;
 import com.example.dhernandez.vidvintage.di.module.UIModule;
+import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter;
@@ -44,5 +45,7 @@ public interface IApplicationComponent {
     void inject(FeedRssPresenter feedRssPresenter);
 
     void inject(MenuListPresenter menuListPresenter);
+
+    void inject(CocktailsMenuPresenter cocktailsMenuPresenter);
 
 }

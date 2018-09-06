@@ -49,6 +49,7 @@
                 android:textSize="24sp" />
 
             <ImageButton
+                android:visibility="invisible"
                 android:id="@+id/button3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -66,6 +67,7 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.constraint.ConstraintLayout
+        android:visibility="visible"
         android:id="@+id/cocktails_menu_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,6 +83,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="64dp"
             android:layout_marginStart="8dp"
+            android:padding="15dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/gin"
@@ -96,6 +99,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:padding="15dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/whisky"
@@ -111,6 +115,8 @@
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="12dp"
+            android:padding="15dp"
+
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/rum"
@@ -125,6 +131,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="64dp"
             android:layout_marginEnd="8dp"
+            android:padding="15dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/others"
@@ -136,15 +143,5 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <!--ImageView
-        android:visibility="gone"
-        android:id="@+id/span_publicity"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="2"
-        android:background="@android:color/transparent"
-        android:src="@drawable/span"></ImageView -->
 
 </android.support.constraint.ConstraintLayout>
