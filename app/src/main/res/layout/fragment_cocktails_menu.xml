@@ -55,8 +55,7 @@
                 android:alpha="1"
                 android:background="@android:color/transparent"
                 android:scaleType="fitStart"
-                android:src="@android:drawable/ic_menu_preferences"
-                android:tint="@color/background_color" />
+                android:src="@drawable/icon_config" />
 
         </LinearLayout>
 

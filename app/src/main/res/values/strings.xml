@@ -28,5 +28,6 @@
     <string name="preferences_dialog_theme_dark">Dark</string>
     <string name="preferences_dialog_session">Mantener sesión iniciada</string>
     <string name="preferences_dialog_close_session">Cerrar Sesión</string>
+    <string name="app_title">Vi d\' Vintage</string>
 
 </resources>
