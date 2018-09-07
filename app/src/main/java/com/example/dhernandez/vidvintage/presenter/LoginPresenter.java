@@ -2,17 +2,25 @@ package com.example.dhernandez.vidvintage.presenter;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.graphics.drawable.Drawable;
+import android.widget.LinearLayout;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
+import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
+import com.example.dhernandez.vidvintage.repository.ILocalStorageRepository;
 import com.google.firebase.auth.FirebaseUser;
+
+import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.DARK;
+import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.LIGHT;
 
 /**
  * Created by dhernandez on 30/08/2018.
  */
 
-public class LoginPresenter extends ViewModel implements ILoginPresenter{
+public class LoginPresenter extends ViewModel implements ILoginPresenter {
 
+    private final MutableLiveData<LoadedPreferences> loadedPreferences;
     private String email;
     private String password;
 
@@ -25,11 +33,22 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter{
     private MutableLiveData<Boolean> showProgress;
     private MutableLiveData<Boolean> showFormFields;
 
-    public LoginPresenter(){
+    ILocalStorageRepository localStorageRepository;
+
+    private MutableLiveData<Boolean> fullScreen;
+    private MutableLiveData<Constants.Themes> appTheme;
+
+    public LoginPresenter(ILocalStorageRepository localStorageRepository,
+                          MutableLiveData<LoadedPreferences> loadedPreferencesMutableLiveData) {
         //Import the presenter in the application component to make The job of Dagger
         //a little bit easier by the time it will have to resolve dependencies
         MyApplication.getApplicationComponent().inject(this);
 
+        this.localStorageRepository = localStorageRepository;
+        this.loadedPreferences = loadedPreferencesMutableLiveData;
+
+        this.fullScreen = new MutableLiveData<>();
+        this.appTheme = new MutableLiveData<>();
         this.showFormFields = new MutableLiveData<>();
         this.showLoginError = new MutableLiveData<>();
         this.navigateTo = new MutableLiveData<>();
@@ -43,12 +62,16 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter{
         this.showFormFields.setValue(true);
         this.showProgress.setValue(false);
 
-        checkUserSession();
-
     }
-    @Override
-    public void checkUserSession() {
 
+    @Override
+    public MutableLiveData<Boolean> getFullScreen(){
+        return this.fullScreen;
+    }
+
+    @Override
+    public MutableLiveData<Constants.Themes> getAppTheme(){
+        return this.appTheme;
     }
 
     @Override

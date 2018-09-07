@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
+import com.example.dhernandez.vidvintage.repository.ILocalStorageRepository;
 import com.example.dhernandez.vidvintage.repository.IVintageRepository;
 import com.example.dhernandez.vidvintage.repository.VintageRepository;
 import com.example.dhernandez.vidvintage.repository.VintageService;
@@ -33,6 +35,12 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
     @Inject
     MutableLiveData <List<Cocktail>> cocktailList;
 
+    @Inject
+    ILocalStorageRepository localStorageRepository;
+
+    @Inject
+    MutableLiveData<LoadedPreferences> loadedPreferencesMutableLiveData;
+
     public PresenterFactory(@NonNull Application application) {
         super(application);
         MyApplication.getApplicationComponent().inject(this);
@@ -43,19 +51,19 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(SplashPresenter.class)) {
             //noinspection unchecked
-            return (T) new SplashPresenter();
+            return (T) new SplashPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(LoginPresenter.class)) {
             //noinspection unchecked
-            return (T) new LoginPresenter();
+            return (T) new LoginPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(MainPresenter.class)) {
             //noinspection unchecked
-            return (T) new MainPresenter();
+            return (T) new MainPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(FeedRssPresenter.class)) {
             //noinspection unchecked
             return (T) new FeedRssPresenter(feedArticles);
         }if (modelClass.isAssignableFrom(CocktailsMenuPresenter.class)) {
             //noinspection unchecked
-            return (T) new CocktailsMenuPresenter();
+            return (T) new CocktailsMenuPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(MenuListPresenter.class)) {
             //noinspection unchecked
             return (T) new MenuListPresenter(cocktailList);

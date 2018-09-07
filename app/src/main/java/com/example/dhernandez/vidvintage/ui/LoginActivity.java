@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -142,17 +143,33 @@ public class LoginActivity extends AppCompatActivity{
                 }
             }
         });
-
-        checkUserSession();
-        //hideSystemUI();
+        presenter.getFullScreen().observe(this, this::setFullScreen);
+        presenter.getAppTheme().observe(this, this::setAppTheme);
 
     }
 
-    private void checkUserSession() {
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){}
-            //presenter.getNavigateTo().setValue(MAIN);
+    private void setAppTheme(Constants.Themes theme) {
+        Drawable bg;
+        switch (theme){
+            case DARK:
+                bg = getResources().getDrawable(R.drawable.cocktail_menu_item_bg);
+                break;
+            case LIGHT:
+                bg = getResources().getDrawable(R.drawable.light_theme);
+                break;
+            default:
+                bg = getResources().getDrawable(R.drawable.cocktail_menu_item_bg);
+        }
+
+        findViewById(R.id.login_view).setBackgroundDrawable(bg);
+
+    }
+
+    private void setFullScreen(Boolean fullScreen) {
+        if(fullScreen)
+            this.hideSystemUI();
+        else
+            this.showSystemUI();
 
     }
 
@@ -179,20 +196,6 @@ public class LoginActivity extends AppCompatActivity{
             createAccountButton.setVisibility(View.GONE);
             emailLoginButton.setText(R.string.log_in);
         }
-    }
-
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     @Override
@@ -271,12 +274,6 @@ public class LoginActivity extends AppCompatActivity{
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.checkUserSession();
-    }
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -307,7 +304,29 @@ public class LoginActivity extends AppCompatActivity{
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
+    }
 
+    // This snippet hides the system bars.
+    private void hideSystemUI() {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        View decorView = this.getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    // This snippet shows the system bars. It does this by removing all the flags
+    // except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = this.getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
     }
 
 }

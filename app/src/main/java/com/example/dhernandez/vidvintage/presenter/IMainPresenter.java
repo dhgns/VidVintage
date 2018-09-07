@@ -1,5 +1,6 @@
 package com.example.dhernandez.vidvintage.presenter;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
@@ -17,5 +18,7 @@ public interface IMainPresenter {
     void onCocktailsMenu();
 
     void onProfile();
+
+    LiveData<Boolean> getFullScreen();
 }
 

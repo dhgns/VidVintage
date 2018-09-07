@@ -11,7 +11,8 @@ import com.example.dhernandez.vidvintage.Utils.Constants;
 
 public interface ILoginPresenter {
 
-    void checkUserSession();
+    MutableLiveData<Boolean> getFullScreen();
+    MutableLiveData<Constants.Themes> getAppTheme();
 
     MutableLiveData<Boolean> getShowLoginError();
 

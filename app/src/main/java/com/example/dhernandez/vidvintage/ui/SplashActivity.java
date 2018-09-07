@@ -34,10 +34,14 @@ public class SplashActivity extends AppCompatActivity {
         hideSystemUI();
 
         presenter.getNavigateTo().observe(this,screen -> {
+            Intent i = null;
             if(screen == Constants.Screens.LOGIN){
-                Intent i = new Intent(SplashActivity.this,LoginActivity.class);
-                SplashActivity.this.startActivity(i);
+                i = new Intent(SplashActivity.this,LoginActivity.class);
+            }else if(screen == Constants.Screens.MAIN) {
+                i = new Intent(SplashActivity.this, MainActivity.class);
             }
+            if(i != null)
+                SplashActivity.this.startActivity(i);
         });
     }
 

@@ -37,7 +37,6 @@ public class MenuListPresenter  extends ViewModel implements IMenuListPresenter{
                     cocktailListMLD.setValue(cocktailList.getCocktails());
             }
         });
-
     }
 
     @Override

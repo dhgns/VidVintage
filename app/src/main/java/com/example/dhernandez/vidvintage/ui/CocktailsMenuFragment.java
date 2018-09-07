@@ -1,6 +1,8 @@
 package com.example.dhernandez.vidvintage.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,8 +12,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.dhernandez.vidvintage.R;
+import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.ICocktailsMenuPresenter;
@@ -29,13 +33,15 @@ import dagger.android.support.AndroidSupportInjection;
  * Created by dhernandez on 30/08/2018.
  */
 
-public class CocktailsMenuFragment extends Fragment {
+public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVisibilityChangeListener {
 
     @Inject
     PresenterFactory presenterFactory;
     ICocktailsMenuPresenter presenter;
 
     private List<Cocktail> cocktails;
+    PreferencesDialog preferencesDialog;
+    private Boolean fullScreenActive;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,35 +63,70 @@ public class CocktailsMenuFragment extends Fragment {
         presenter.getCocktailsList().observe(this, cocktails -> {
             this.cocktails = cocktails;
         });
-
         presenter.getNavigateTo().observe(this, screen -> {
             if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
                 Fragment fragment = null;
+                Intent intent = null;
+
                 switch (screen) {
                     case GIN_MENU:
                     case RUM_MENU:
                     case WHISKY_MENU:
                     case OTHER_MENU:
                         fragment = new MenuListFragment();
+                        break;
+                    case LOGIN:
+                        intent = new Intent(getActivity(), LoginActivity.class);
+                        break;
                 }
                 if (fragment != null) {
                     transaction.replace(container.getId(), fragment).addToBackStack(null).commit();
                     presenter.getNavigateTo().setValue(null);
                 }
+                if(intent != null){
+                    startActivity(intent);
+                }
             }
 
         });
-
-        setUpGridView();
+        presenter.getShowPreferences().observe(this, this::showPreferencesDialog);
+        presenter.getDarkThemeActive().observe(this, this::showDarkTheme);
+        presenter.getFullScreen().observe(this, fullScreen -> {
+            if (fullScreen != null && fullScreen != this.fullScreenActive) {
+                this.fullScreenActive = fullScreen;
+                if (fullScreen)
+                    this.hideSystemUI();
+                else
+                    this.showSystemUI();
+            }
+        });
 
         return view;
     }
 
-    private void setUpGridView() {
+    private void showDarkTheme(Boolean darkThemeActive) {
+        if(darkThemeActive != null) {
+            Drawable bg;
+            if (darkThemeActive) {
+                bg = getResources().getDrawable(R.drawable.cocktail_menu_item_bg);
+                getView().setBackground(bg);
+            } else {
+                bg = getResources().getDrawable(R.drawable.light_theme);
+                getView().setBackground(bg);
+            }
+        }
+    }
 
+    private void showPreferencesDialog(Boolean showDialog) {
+        if (showDialog!= null && showDialog) {
+            presenter.updateActivePreferences();
+            preferencesDialog = new PreferencesDialog(presenter, getContext(), getActivity());
+            preferencesDialog.show(getChildFragmentManager(), null);
+            presenter.getShowPreferences().setValue(null);
+        }
     }
 
     @OnClick(R.id.cocktail_menu_gin_section)
@@ -102,13 +143,44 @@ public class CocktailsMenuFragment extends Fragment {
     @OnClick(R.id.cocktail_menu_whisky_section)
     public void onWhiskySectionClick() {
         presenter.onWhiskySectionClick();
-
     }
 
     @OnClick(R.id.cocktail_menu_other_section)
     public void onOtherSectionClick() {
         presenter.onOtherSectionClick();
-
     }
 
+    @OnClick(R.id.cocktail_menu_config_button)
+    public void onPreferencesClick() {
+        presenter.showPreferences();
+    }
+
+    // This snippet hides the system bars.
+    private void hideSystemUI() {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    // This snippet shows the system bars. It does this by removing all the flags
+    // except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+    }
+
+    @Override
+    public void onSystemUiVisibilityChange(int i) {
+        if(this.fullScreenActive)
+            hideSystemUI();
+    }
 }

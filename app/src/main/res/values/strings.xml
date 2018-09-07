@@ -22,5 +22,11 @@
     <string name="cocktail_menu_item_title">Sex on the Beach</string>
     <string name="cocktail_menu_item_description">One of the most tipical cocktails, base on pineapple juice and vodka, so fresh and addictive. Try it out!</string>
     <string name="not_supported">Not supported yet. Available in TFM</string>
+    <string name="text_inmmersive_mode">Pantalla completa</string>
+    <string name="preferences_dialog_theme">Tema:</string>
+    <string name="preferences_dialog_theme_light">Light</string>
+    <string name="preferences_dialog_theme_dark">Dark</string>
+    <string name="preferences_dialog_session">Mantener sesión iniciada</string>
+    <string name="preferences_dialog_close_session">Cerrar Sesión</string>
 
 </resources>
