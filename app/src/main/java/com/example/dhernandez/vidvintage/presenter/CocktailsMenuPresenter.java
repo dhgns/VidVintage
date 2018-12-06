@@ -119,7 +119,7 @@ public class CocktailsMenuPresenter extends ViewModel implements ICocktailsMenuP
     @Override
     public void setDarkTheme(boolean activeDarkTheme) {
         if (this.darkThemeActive.getValue() != activeDarkTheme) {
-            this.darkThemeActive.setValue(true);
+            this.darkThemeActive.setValue(activeDarkTheme);
             localStorageRepository.saveString(THEME_KEY, Constants.Themes.DARK.toString());
         }
     }
