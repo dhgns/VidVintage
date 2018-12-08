@@ -1,27 +1,21 @@
 package com.example.dhernandez.vidvintage.Utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.support.v4.app.DialogFragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
-import com.example.dhernandez.vidvintage.presenter.ICocktailsMenuPresenter;
+import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.ICocktailsMenuPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +76,7 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
                 () -> {
                     if(loadedPreferences.getFullScreen())
                         setImmersiveMode();
-                }, 650);
+                }, 10);
     }
 
     @Nullable

@@ -1,6 +1,10 @@
-package com.example.dhernandez.vidvintage.repository;
+package com.example.dhernandez.vidvintage.repository.LocalStorageRepository;
 
-import com.example.dhernandez.vidvintage.Utils.Constants;
+import android.arch.lifecycle.MutableLiveData;
+
+import com.example.dhernandez.vidvintage.entity.Cocktail;
+
+import java.util.List;
 
 /**
  * Created by dhernandez on 06/09/2018.
@@ -18,5 +22,10 @@ public interface ILocalStorageRepository {
 
     void saveBoolean(String sessionKey, boolean fullScreen);
     boolean loadBoolean(String key);
+
+    void saveCocktail(Cocktail cocktail);
+
+    MutableLiveData<List<Cocktail>> retrieveCocktails(String userID);
+
 }
 

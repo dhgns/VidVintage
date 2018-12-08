@@ -1,9 +1,8 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;

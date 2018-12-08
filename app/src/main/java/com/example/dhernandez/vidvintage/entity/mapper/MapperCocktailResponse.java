@@ -2,9 +2,9 @@ package com.example.dhernandez.vidvintage.entity.mapper;
 
 import com.example.dhernandez.vidvintage.entity.Author;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.example.dhernandez.vidvintage.entity.CocktailDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
 import com.example.dhernandez.vidvintage.entity.Ingredient;
-import com.example.dhernandez.vidvintage.entity.IngredientDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.IngredientDAO;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,14 +2,17 @@ package com.example.dhernandez.vidvintage.di.component;
 
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.di.module.ApplicationModule;
-import com.example.dhernandez.vidvintage.di.module.UIDataModule;
+import com.example.dhernandez.vidvintage.di.module.RepositoryModule;
+import com.example.dhernandez.vidvintage.di.module.DataModule;
 import com.example.dhernandez.vidvintage.di.module.UIModule;
-import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.LoginPresenter;
-import com.example.dhernandez.vidvintage.presenter.MainPresenter;
-import com.example.dhernandez.vidvintage.presenter.MenuListPresenter;
+import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
+import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.LoginPresenter.LoginPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
+import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.LocalStorageRepository;
+import com.example.dhernandez.vidvintage.repository.VintageRepository.VintageRepository;
 
 import javax.inject.Singleton;
 
@@ -27,15 +30,18 @@ import dagger.android.support.AndroidSupportInjectionModule;
         modules = {
                 ApplicationModule.class,
                 UIModule.class,
-                UIDataModule.class,
+                DataModule.class,
+                RepositoryModule.class,
                 AndroidInjectionModule.class,
                 AndroidSupportInjectionModule.class
         }
 )
 public interface IApplicationComponent {
 
+    //Application
     void inject(MyApplication myApplication);
 
+    //Presenters
     void inject(PresenterFactory presenterFactory);
 
     void inject(LoginPresenter loginPresenter);
@@ -47,5 +53,12 @@ public interface IApplicationComponent {
     void inject(MenuListPresenter menuListPresenter);
 
     void inject(CocktailsMenuPresenter cocktailsMenuPresenter);
+
+    //Repositories
+    void inject(LocalStorageRepository localStorageRepository);
+
+    void inject(VintageRepository vintageRepository);
+
+    MyApplication getApplication();
 
 }

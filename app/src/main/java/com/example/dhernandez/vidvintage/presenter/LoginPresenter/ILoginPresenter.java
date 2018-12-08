@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

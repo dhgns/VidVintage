@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -8,7 +8,7 @@ import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
-import com.example.dhernandez.vidvintage.repository.ILocalStorageRepository;
+import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 
 import java.util.List;
 

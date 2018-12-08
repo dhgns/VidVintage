@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
 
 import java.util.List;
 

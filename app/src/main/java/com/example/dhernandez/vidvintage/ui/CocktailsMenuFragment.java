@@ -12,13 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter;
-import com.example.dhernandez.vidvintage.presenter.ICocktailsMenuPresenter;
+import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
+import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.ICocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 
 import java.util.List;

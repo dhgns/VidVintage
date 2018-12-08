@@ -1,17 +1,28 @@
-package com.example.dhernandez.vidvintage.entity;
+package com.example.dhernandez.vidvintage.entity.DAO;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmField;
+import io.realm.annotations.Required;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by dhernandez on 03/09/2018.
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CocktailDAO {
+
     @SerializedName("name")
     String name;
     @SerializedName("author")
@@ -32,5 +43,8 @@ public class CocktailDAO {
     Integer likes;
     @SerializedName("url")
     String cocktailUrl;
+
+    @PrimaryKey
+    String id;
 
 }

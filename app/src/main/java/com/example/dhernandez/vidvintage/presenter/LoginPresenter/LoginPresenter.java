@@ -1,18 +1,12 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.graphics.drawable.Drawable;
-import android.widget.LinearLayout;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
-import com.example.dhernandez.vidvintage.repository.ILocalStorageRepository;
-import com.google.firebase.auth.FirebaseUser;
-
-import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.DARK;
-import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.LIGHT;
+import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 
 /**
  * Created by dhernandez on 30/08/2018.

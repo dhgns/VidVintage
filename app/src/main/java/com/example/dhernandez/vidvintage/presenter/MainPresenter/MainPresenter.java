@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.MainPresenter;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModel;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
-import com.example.dhernandez.vidvintage.repository.ILocalStorageRepository;
+import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 
 import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.DARK;
 import static com.example.dhernandez.vidvintage.Utils.Constants.Themes.LIGHT;

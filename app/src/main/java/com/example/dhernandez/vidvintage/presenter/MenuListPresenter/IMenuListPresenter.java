@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.presenter;
+package com.example.dhernandez.vidvintage.presenter.MenuListPresenter;
 
 import android.arch.lifecycle.MutableLiveData;
 

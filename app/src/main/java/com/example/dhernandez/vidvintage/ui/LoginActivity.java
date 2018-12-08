@@ -24,15 +24,13 @@ import android.widget.Toast;
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.Utils.ScreenUtils;
-import com.example.dhernandez.vidvintage.presenter.ILoginPresenter;
-import com.example.dhernandez.vidvintage.presenter.LoginPresenter;
+import com.example.dhernandez.vidvintage.presenter.LoginPresenter.ILoginPresenter;
+import com.example.dhernandez.vidvintage.presenter.LoginPresenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
-import com.example.dhernandez.vidvintage.presenter.SplashPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import javax.inject.Inject;
 

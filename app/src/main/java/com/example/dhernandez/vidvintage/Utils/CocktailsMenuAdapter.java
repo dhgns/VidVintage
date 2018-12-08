@@ -6,7 +6,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

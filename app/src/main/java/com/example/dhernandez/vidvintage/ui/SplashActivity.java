@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Constants;
-import com.example.dhernandez.vidvintage.presenter.ISplashPresenter;
+import com.example.dhernandez.vidvintage.presenter.SplashPresenter.ISplashPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
-import com.example.dhernandez.vidvintage.presenter.SplashPresenter;
+import com.example.dhernandez.vidvintage.presenter.SplashPresenter.SplashPresenter;
 
 import javax.inject.Inject;
 

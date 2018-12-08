@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.IFeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.IFeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 import com.squareup.picasso.Picasso;
 

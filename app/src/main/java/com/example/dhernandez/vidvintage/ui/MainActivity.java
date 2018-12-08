@@ -13,14 +13,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.ImageAdapter;
-import com.example.dhernandez.vidvintage.presenter.IMainPresenter;
-import com.example.dhernandez.vidvintage.presenter.MainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 
 import javax.inject.Inject;

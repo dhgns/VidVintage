@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.ArticlesAdapter;
 import com.example.dhernandez.vidvintage.Utils.CocktailsMenuAdapter;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.IMenuListPresenter;
-import com.example.dhernandez.vidvintage.presenter.MenuListPresenter;
+import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.IMenuListPresenter;
+import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 
 import java.util.List;

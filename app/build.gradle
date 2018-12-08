@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
 
 android {
     compileSdkVersion 27
@@ -24,6 +26,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        users {
+            buildConfigField "String", "SERVER_URL", '"http://206.189.22.232:8080/"'
+
+        }
+
+        cockteleries {
+            buildConfigField "String", "SERVER_URL", '"http://206.189.22.232:8080/"'
+
         }
     }
 

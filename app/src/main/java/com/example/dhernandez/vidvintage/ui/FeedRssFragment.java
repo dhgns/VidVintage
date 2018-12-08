@@ -23,16 +23,11 @@ import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.ArticlesAdapter;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.IFeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.IFeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
-import com.prof.rssparser.Article;
-import com.prof.rssparser.Parser;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 

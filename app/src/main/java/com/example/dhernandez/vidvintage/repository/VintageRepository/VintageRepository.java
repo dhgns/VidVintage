@@ -1,30 +1,23 @@
-package com.example.dhernandez.vidvintage.repository;
+package com.example.dhernandez.vidvintage.repository.VintageRepository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.example.dhernandez.vidvintage.entity.CocktailDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
 import com.example.dhernandez.vidvintage.entity.CocktailsMenuResponse;
 import com.example.dhernandez.vidvintage.entity.ErrorComm;
 import com.example.dhernandez.vidvintage.entity.mapper.MapperCocktailResponse;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
-import dagger.Provides;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Headers;
 
 /**
  * Created by dhernandez on 03/09/2018.
@@ -32,40 +25,12 @@ import retrofit2.http.Headers;
 
 public class VintageRepository implements IVintageRepository {
 
-    private final Retrofit retrofit;
-    private final IVintageService vintageService;
-    private final String baseUrl = "http://206.189.22.232:8080";
+    protected Retrofit retrofit;
 
-    private interface IVintageService {
-        @Headers({
-                "Accept: application/json",
-                "Content-Type: application/json"
-        })
-        @GET("/cocktails")
-        Call<List<CocktailDAO>> getCocktails();
-    }
-
-    public VintageRepository() {
-
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-
-        client.connectTimeout(60, TimeUnit.SECONDS);
-        client.readTimeout(60, TimeUnit.SECONDS);
-        client.writeTimeout(60, TimeUnit.SECONDS);
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        client.addInterceptor(logging);
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        vintageService = retrofit.create(IVintageService.class);
-
+    @Inject
+    public VintageRepository(Retrofit retrofit) {
+        this.retrofit = retrofit;
+        MyApplication.getApplicationComponent().inject(this);
     }
 
     @Override
@@ -78,7 +43,7 @@ public class VintageRepository implements IVintageRepository {
     }
 
     private LiveData<CocktailsMenuResponse> getCocktails(MutableLiveData<CocktailsMenuResponse> cocktailsMenuResponseMLD) {
-        Call<List<CocktailDAO>> call = vintageService.getCocktails();
+        Call<List<CocktailDAO>> call = retrofit.create(IVintageAPI.class).getCocktails();
 
         call.enqueue(new Callback<List<CocktailDAO>>() {
             CocktailsMenuResponse cocktailsMenuResponse;

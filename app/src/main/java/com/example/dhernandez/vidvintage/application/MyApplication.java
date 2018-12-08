@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
+import com.example.dhernandez.vidvintage.BuildConfig;
 import com.example.dhernandez.vidvintage.di.component.DaggerIApplicationComponent;
 import com.example.dhernandez.vidvintage.di.component.IApplicationComponent;
 import com.example.dhernandez.vidvintage.di.module.ApplicationModule;
@@ -34,8 +35,7 @@ public class MyApplication extends Application implements HasActivityInjector, H
 
         MyApplication.applicationComponent = DaggerIApplicationComponent.builder()
                 .applicationModule(
-                        new ApplicationModule(
-                                this)
+                        new ApplicationModule(this, BuildConfig.SERVER_URL)
                 ).build();
 
         applicationComponent.inject(this);
