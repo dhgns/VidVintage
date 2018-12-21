@@ -5,12 +5,14 @@ import com.example.dhernandez.vidvintage.di.module.ApplicationModule;
 import com.example.dhernandez.vidvintage.di.module.RepositoryModule;
 import com.example.dhernandez.vidvintage.di.module.DataModule;
 import com.example.dhernandez.vidvintage.di.module.UIModule;
+import com.example.dhernandez.vidvintage.presenter.ArticlePresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
+import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.ProfilePresenter;
 import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.LocalStorageRepository;
 import com.example.dhernandez.vidvintage.repository.VintageRepository.VintageRepository;
 
@@ -53,6 +55,10 @@ public interface IApplicationComponent {
     void inject(MenuListPresenter menuListPresenter);
 
     void inject(CocktailsMenuPresenter cocktailsMenuPresenter);
+
+    void inject(ProfilePresenter profilePresenter);
+
+    void inject(ArticlePresenter articlePresenter);
 
     //Repositories
     void inject(LocalStorageRepository localStorageRepository);

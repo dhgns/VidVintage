@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CocktailsMenuResponse {
 
-    private List<Cocktail> cocktails;
+    private List<CocktailVO> cocktailVOS;
     private ErrorComm errorComm;
 }

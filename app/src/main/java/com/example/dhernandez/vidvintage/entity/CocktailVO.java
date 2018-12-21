@@ -11,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-public class Cocktail {
+public class CocktailVO {
 
     String name;
     Author author;

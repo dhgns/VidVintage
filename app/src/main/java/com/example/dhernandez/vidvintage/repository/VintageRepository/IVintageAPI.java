@@ -15,7 +15,7 @@ import retrofit2.http.Headers;
 public interface IVintageAPI {
 
     //@GET("http://206.189.22.232:8080/cocktails")
-    //Call<List<CocktailDAO>> getCocktails();
+    //Call<List<CocktailDAO>> getCocktailVOS();
 
     @Headers({
             "Accept: application/json",

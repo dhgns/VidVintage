@@ -2,7 +2,7 @@ package com.example.dhernandez.vidvintage.presenter.MenuListPresenter;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import java.util.List;
  */
 
 public interface IMenuListPresenter {
-    MutableLiveData<List<Cocktail>> getCocktails();
+    MutableLiveData<List<CocktailVO>> getCocktails();
     void showCocktailDetail(int cocktailIndex);
 }

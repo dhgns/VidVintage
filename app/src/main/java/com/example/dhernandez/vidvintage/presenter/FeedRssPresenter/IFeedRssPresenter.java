@@ -15,6 +15,8 @@ public interface IFeedRssPresenter {
 
     void showArticleDetail(ArticleVO articleVO);
 
+    MutableLiveData<Boolean> getIsFavourite();
+
     MutableLiveData<List<ArticleVO>> getFeedArticles();
 
     MutableLiveData<ArticleVO> getArticleClicked();
@@ -28,4 +30,12 @@ public interface IFeedRssPresenter {
     void readFeed();
 
     void refreshFeed();
+
+    boolean checkFavouriteArticle(String url);
+
+    void removeFavouriteArticle();
+
+    void addFavouriteArticle();
+
+    void toogleFavourite();
 }

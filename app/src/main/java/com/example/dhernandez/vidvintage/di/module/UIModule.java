@@ -6,9 +6,11 @@ import com.example.dhernandez.vidvintage.ui.FeedRssFragment;
 import com.example.dhernandez.vidvintage.ui.LoginActivity;
 import com.example.dhernandez.vidvintage.ui.MainActivity;
 import com.example.dhernandez.vidvintage.ui.MenuListFragment;
+import com.example.dhernandez.vidvintage.ui.ProfileFragment;
 import com.example.dhernandez.vidvintage.ui.SplashActivity;
 
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 
 /**
@@ -39,5 +41,8 @@ public abstract class UIModule {
 
     @ContributesAndroidInjector
     abstract MenuListFragment bindMenuListFragment();
+
+    @ContributesAndroidInjector
+    abstract ProfileFragment bindProfileFragment();
 
 }

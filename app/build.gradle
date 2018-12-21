@@ -34,12 +34,12 @@ android {
     productFlavors {
         users {
             buildConfigField "String", "SERVER_URL", '"http://206.189.22.232:8080/"'
-
+            buildConfigField "String", "LOCAL", '"cockteleries"'
         }
 
         cockteleries {
             buildConfigField "String", "SERVER_URL", '"http://206.189.22.232:8080/"'
-
+            buildConfigField "String", "LOCAL", '"cockteleries"'
         }
     }
 

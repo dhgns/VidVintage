@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
+import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
 
@@ -14,29 +15,38 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.OnClick;
+
 /**
  * Created by dhernandez on 30/08/2018.
  */
 
-public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
+public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
 
+    private final ILocalStorageRepository localStorageRepository;
     private MutableLiveData<List<ArticleVO>> feedArticles;
+
     private final MutableLiveData<ArticleVO> articleClicked;
     private MutableLiveData<Constants.Screens> navigateTo;
     private MutableLiveData<Boolean> showProgress;
     private MutableLiveData<Boolean> showFeedReadError;
+    private MutableLiveData<Boolean> isFavourite;
     private String urlString;
 
-    public FeedRssPresenter(MutableLiveData<List<ArticleVO>> feedArticles){
+    public FeedRssPresenter(MutableLiveData<List<ArticleVO>> feedArticles,
+                            ILocalStorageRepository localStorageRepository,
+                            MutableLiveData<ArticleVO> articleClicked) {
         //Import the presenter in the application component to make The job of Dagger
         //a little bit easier by the time it will have to resolve dependencies
         MyApplication.getApplicationComponent().inject(this);
 
         this.feedArticles = feedArticles;
-        this.articleClicked = new MutableLiveData<>();
+        this.localStorageRepository = localStorageRepository;
+        this.articleClicked = articleClicked;
         this.navigateTo = new MutableLiveData<>();
         this.showProgress = new MutableLiveData<>();
         this.showFeedReadError = new MutableLiveData<>();
+        this.isFavourite = new MutableLiveData<>();
         this.showFeedReadError.setValue(false);
 
         //urlString = "https://www.reddit.com/r/cocktails/.rss";
@@ -52,23 +62,28 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
 
     @Override
     public void showArticleDetail(ArticleVO articleVO) {
+        this.isFavourite.setValue(this.checkFavouriteArticle(articleVO.getUrl()));
         this.articleClicked.setValue(articleVO);
         this.navigateTo.setValue(Constants.Screens.ARTICLE_DETAIL);
-
     }
 
     @Override
-    public MutableLiveData<List<ArticleVO>> getFeedArticles(){
+    public MutableLiveData<Boolean> getIsFavourite() {
+        return this.isFavourite;
+    }
+
+    @Override
+    public MutableLiveData<List<ArticleVO>> getFeedArticles() {
         return this.feedArticles;
     }
 
     @Override
-    public MutableLiveData<ArticleVO> getArticleClicked(){
+    public MutableLiveData<ArticleVO> getArticleClicked() {
         return this.articleClicked;
     }
 
     @Override
-    public MutableLiveData<Constants.Screens> getNavigateTo(){
+    public MutableLiveData<Constants.Screens> getNavigateTo() {
         return this.navigateTo;
     }
 
@@ -95,39 +110,39 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
                 showProgress.setValue(false);
 
                 ArrayList<ArticleVO> readResult = new ArrayList<>();
-                for(Article a : list){
+                for (Article a : list) {
                     ArticleVO articleVO = new ArticleVO();
 
                     String urlImage = a.getImage();
-                    if(urlImage != null)
+                    if (urlImage != null)
                         urlImage = urlImage.replace("\n", "");
                     articleVO.setArticleImageURL(urlImage);
 
                     String authorName = a.getAuthor();
-                    if(authorName != null)
+                    if (authorName != null)
                         authorName = authorName.replace("\n", "");
                     articleVO.setAuthor(authorName);
 
                     String articleTitle = a.getTitle();
-                    if(articleTitle != null)
+                    if (articleTitle != null)
                         articleTitle = articleTitle.replace("\n", "");
                     articleVO.setTitle(articleTitle);
 
                     String articleDescription = a.getDescription();
-                    if(articleDescription != null)
+                    if (articleDescription != null)
                         articleDescription = formatArticleBody(articleDescription);
                     articleVO.setDescription(articleDescription);
 
 
                     String articleUrl = a.getLink();
-                    if(articleUrl != null)
+                    if (articleUrl != null)
                         articleUrl = articleUrl.replace("\n", "");
                     articleVO.setUrl(articleUrl);
 
                     readResult.add(articleVO);
                 }
 
-                if(!readResult.isEmpty()) {
+                if (!readResult.isEmpty()) {
                     feedArticles.postValue(readResult);
                 }
             }
@@ -148,9 +163,34 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
         this.readFeed();
     }
 
+    @Override
+    public boolean checkFavouriteArticle(String url) {
+        return localStorageRepository.getFavouriteArticle(url) != null;
+    }
+
+    @Override
+    public void removeFavouriteArticle() {
+        localStorageRepository.removeFavourite(this.articleClicked.getValue());
+    }
+
+    @Override
+    public void addFavouriteArticle() {
+        localStorageRepository.addArticleFavourite(articleClicked.getValue());
+    }
+
+    @Override
+    public void toogleFavourite() {
+        if(this.isFavourite.getValue()){
+            this.removeFavouriteArticle();
+        }else{
+            this.addFavouriteArticle();
+        }
+        this.isFavourite.setValue(!this.isFavourite.getValue());
+    }
 
     /**
      * This function will call an recursive function tha will remove the repeated "\n" in the article body
+     *
      * @param articleDescription
      * @return
      */
@@ -163,12 +203,12 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter  {
         return ret;
     }
 
-    private String replaceRepeatedBreakLine(String s, Pattern p){
+    private String replaceRepeatedBreakLine(String s, Pattern p) {
         String ret = s;
 
         Matcher m = p.matcher(s);
 
-        if(m.find()){
+        if (m.find()) {
             String toReplace = ret.substring(m.start(), m.end());
             ret = replaceRepeatedBreakLine(ret.replace(toReplace, "\n\n"), p);
         }

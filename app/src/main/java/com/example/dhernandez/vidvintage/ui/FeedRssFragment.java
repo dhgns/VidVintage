@@ -92,15 +92,15 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        presenter.getNavigateTo().observe(this, screen ->{
-            if(screen != null){
+        presenter.getNavigateTo().observe(this, screen -> {
+            if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Fragment f = null;
-                if(screen == Constants.Screens.ARTICLE_DETAIL){
+                if (screen == Constants.Screens.ARTICLE_DETAIL) {
                     f = new ArticleDetailFragment();
                 }
-                if(f != null) {
+                if (f != null) {
                     transaction.replace(container.getId(), f).addToBackStack(null).commit();
                     presenter.getNavigateTo().setValue(null);
                 }
@@ -127,16 +127,10 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void setUpRecyclerView() {
         articlesAdapter = new ArticlesAdapter(articles);
 
-        articlesAdapter.setOnClickListener(new RecyclerView.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onArticleClick(rss_recycler_view.getChildAdapterPosition(view));
-            }
-        });
+        articlesAdapter.setOnClickListener(view -> onArticleClick(rss_recycler_view.getChildAdapterPosition(view)));
 
         rss_recycler_view.setAdapter(articlesAdapter);
         rss_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
     }
 
     @Override

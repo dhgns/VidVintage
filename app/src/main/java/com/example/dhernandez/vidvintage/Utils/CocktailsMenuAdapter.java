@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +26,14 @@ import java.util.List;
 public class CocktailsMenuAdapter extends RecyclerView.Adapter<CocktailsMenuAdapter.CocktailHolder>
         implements RecyclerView.OnClickListener {
 
-    private List<Cocktail> cocktails;
+    private List<CocktailVO> cocktailVOS;
     private RecyclerView.OnClickListener listener;
 
     private Context context;
 
 
-    public CocktailsMenuAdapter(Context context, List<Cocktail> cocktails){
-        this.cocktails = cocktails;
+    public CocktailsMenuAdapter(Context context, List<CocktailVO> cocktailVOS){
+        this.cocktailVOS = cocktailVOS;
         this.context = context;
     }
 
@@ -49,20 +49,20 @@ public class CocktailsMenuAdapter extends RecyclerView.Adapter<CocktailsMenuAdap
 
     @Override
     public void onBindViewHolder(@NonNull CocktailsMenuAdapter.CocktailHolder holder, int position) {
-        Cocktail cocktail = cocktails.get(position);
+        CocktailVO cocktailVO = cocktailVOS.get(position);
 
-        holder.bind(cocktail);
+        holder.bind(cocktailVO);
     }
 
     @Override
     public int getItemCount() {
-        if(cocktails != null)
-            return cocktails.size();
+        if(cocktailVOS != null)
+            return cocktailVOS.size();
         return 0;
     }
 
-    public void setListSource(List<Cocktail> cocktails) {
-        this.cocktails = cocktails;
+    public void setListSource(List<CocktailVO> cocktailVOS) {
+        this.cocktailVOS = cocktailVOS;
     }
 
     public class CocktailHolder extends RecyclerView.ViewHolder {
@@ -87,12 +87,12 @@ public class CocktailsMenuAdapter extends RecyclerView.Adapter<CocktailsMenuAdap
 
         @SuppressLint("NewApi")
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        public void bind (Cocktail cocktail){
-            if(cocktail.getName() != null)
-                articleTitle.setText(cocktail.getName());
-            if(cocktail.getDescription() != null)
-                articleDescription.setText(cocktail.getDescription());
-            if(cocktail.getUrlPhoto() == null || cocktail.getUrlPhoto().equals(""))
+        public void bind (CocktailVO cocktailVO){
+            if(cocktailVO.getName() != null)
+                articleTitle.setText(cocktailVO.getName());
+            if(cocktailVO.getDescription() != null)
+                articleDescription.setText(cocktailVO.getDescription());
+            if(cocktailVO.getUrlPhoto() == null || cocktailVO.getUrlPhoto().equals(""))
                 cocktailImage.setVisibility(View.GONE);
             else
                 cocktailImage.setImageDrawable(context.getDrawable(R.drawable.sex_on_the_beach));
@@ -111,9 +111,9 @@ public class CocktailsMenuAdapter extends RecyclerView.Adapter<CocktailsMenuAdap
             tagsRecyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 
             /*
-            if(!cocktail.getTags().isEmpty()){
+            if(!cocktailVO.getTags().isEmpty()){
                 TagsAdapter tagsAdapter = new TagsAdapter();
-                tagsAdapter.setList(cocktail.getTags());
+                tagsAdapter.setList(cocktailVO.getTags());
 
                 tagsRecyclerView.setAdapter(tagsAdapter);
                 tagsRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));

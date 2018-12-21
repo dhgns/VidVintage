@@ -17,11 +17,21 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="38dp">
 
+        <ImageButton
+            android:id="@+id/article_detail_fav"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:background="@color/transparent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="30dp"/>
+
         <ScrollView
             android:id="@+id/article_detail_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="45dp"
             android:layout_marginBottom="16dp">
 
             <LinearLayout
@@ -116,7 +126,6 @@
             </LinearLayout>
 
         </ScrollView>
-
 
     </RelativeLayout>
 

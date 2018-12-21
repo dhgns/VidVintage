@@ -2,7 +2,8 @@ package com.example.dhernandez.vidvintage.repository.LocalStorageRepository;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.ArticleVO;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 
 import java.util.List;
 
@@ -23,9 +24,16 @@ public interface ILocalStorageRepository {
     void saveBoolean(String sessionKey, boolean fullScreen);
     boolean loadBoolean(String key);
 
-    void saveCocktail(Cocktail cocktail);
+    void saveCocktail(CocktailVO cocktailVO);
 
-    MutableLiveData<List<Cocktail>> retrieveCocktails(String userID);
+    MutableLiveData<List<CocktailVO>> retrieveCocktails(String userID);
 
+    ArticleVO getFavouriteArticle(String url);
+
+    void removeFavourite(ArticleVO value);
+
+    void addArticleFavourite(ArticleVO value);
+
+    List<ArticleVO> getFavouriteArticles();
 }
 

@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 switch (screen) {
                     case PROFILE:
+                        fragment = new ProfileFragment();
                         break;
                     case RSS:
                         fragment = new FeedRssFragment();
@@ -118,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
             case R.id.navigation_profile:
                 //TODO: remove this alert
-                this.profileSection();
-                //presenter.onProfile();
+                //this.profileSection();
+                presenter.onProfile();
                 return true;
         }
         return false;

@@ -65,4 +65,5 @@ public class SplashPresenter extends ViewModel implements ISplashPresenter {
     public MutableLiveData<Constants.Screens> getNavigateTo() {
         return navigateTo;
     }
+
 }

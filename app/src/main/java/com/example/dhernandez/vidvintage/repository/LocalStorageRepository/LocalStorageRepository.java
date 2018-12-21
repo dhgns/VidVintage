@@ -4,16 +4,20 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.SharedPreferences;
 
 import com.example.dhernandez.vidvintage.application.MyApplication;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
-import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
-import com.example.dhernandez.vidvintage.entity.mapper.CocktailMapper;
+import com.example.dhernandez.vidvintage.entity.ArticleVO;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.example.dhernandez.vidvintage.entity.DAO.ArticleDAO;
+import com.example.dhernandez.vidvintage.entity.mapper.ArticleMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by dhernandez on 06/09/2018.
@@ -24,7 +28,6 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     private final SharedPreferences sharedPreferences;
     protected Realm realm;
 
-
     @Inject
     public LocalStorageRepository(Realm realm, SharedPreferences sharedPreferences) {
         MyApplication.getApplicationComponent().inject(this);
@@ -33,9 +36,9 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     }
 
     @Override
-    public void saveTheme(String key,String value) {
+    public void saveTheme(String key, String value) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString(key,value);
+        editor.putString(key, value);
         editor.apply();
     }
 
@@ -47,13 +50,13 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     @Override
     public void saveString(String key, String value) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString(key,value);
+        editor.putString(key, value);
         editor.apply();
     }
 
     @Override
     public String loadString(String key, String defaultValue) {
-        return sharedPreferences.getString(key,defaultValue);
+        return sharedPreferences.getString(key, defaultValue);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     @Override
     public void saveBoolean(String key, boolean value) {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putBoolean(key,value);
+        editor.putBoolean(key, value);
         editor.apply();
     }
 
@@ -74,30 +77,30 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     }
 
     @Override
-    public void saveCocktail(Cocktail cocktail) {
+    public void saveCocktail(CocktailVO cocktailVO) {
         realm.beginTransaction();
         /*
         realm.insertOrUpdate(com.example.dhernandez.vidvintage.entity.mapper.
-                CocktailMapper.mapperVOtoDAO(cocktail));
+                CocktailMapper.mapperVOtoDAO(cocktailVO));
                 */
         realm.commitTransaction();
     }
 
     @Override
-    public MutableLiveData<List<Cocktail>> retrieveCocktails(String userID) {
-        MutableLiveData<List<Cocktail>> result = new MutableLiveData<>();
+    public MutableLiveData<List<CocktailVO>> retrieveCocktails(String userID) {
+        MutableLiveData<List<CocktailVO>> result = new MutableLiveData<>();
 
-        List<Cocktail> value = new ArrayList<>();
+        List<CocktailVO> value = new ArrayList<>();
         /*
-        List<Cocktail> value = CocktailMapper.mapperDAOtoVO(
+        List<CocktailVO> value = CocktailMapper.mapperDAOtoVO(
                 realm.where(CocktailDAO.class).findAll());
                 */
 
-        List<Cocktail> filteredValue = new ArrayList<>();
+        List<CocktailVO> filteredValue = new ArrayList<>();
 
-        for (Cocktail cocktail : value){
-            if(cocktail.getAuthor().getUsername().equals(userID)){
-                filteredValue.add(cocktail);
+        for (CocktailVO cocktailVO : value) {
+            if (cocktailVO.getAuthor().getUsername().equals(userID)) {
+                filteredValue.add(cocktailVO);
             }
         }
 
@@ -105,6 +108,40 @@ public class LocalStorageRepository implements ILocalStorageRepository {
 
         return result;
 
+    }
+
+    @Override
+    public ArticleVO getFavouriteArticle(String url) {
+        return ArticleMapper.mapperDAOtoVO(realm.where(ArticleDAO.class).equalTo("url", url).findFirst());
+    }
+
+    @Override
+    public void removeFavourite(ArticleVO value) {
+        RealmResults<ArticleDAO> results = realm.where(ArticleDAO.class)
+                .equalTo("url", value.getUrl()).findAllAsync();
+
+        results.addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<ArticleDAO>>() {
+            @Override
+            public void onChange(RealmResults<ArticleDAO> articleDAOS, OrderedCollectionChangeSet changeSet) {
+                realm.beginTransaction();
+                results.deleteAllFromRealm();
+                realm.commitTransaction();
+                results.removeChangeListener(this);
+            }
+        });
+    }
+
+    @Override
+    public void addArticleFavourite(ArticleVO value) {
+        realm = Realm.getDefaultInstance();
+        realm.refresh();
+        realm.executeTransactionAsync(
+                realmAux -> realmAux.insertOrUpdate(ArticleMapper.mapperVOtoDAO(value)));
+    }
+
+    @Override
+    public List<ArticleVO> getFavouriteArticles() {
+        return ArticleMapper.mapperDAOtoVO(realm.where(ArticleDAO.class).findAll());
     }
 
 }

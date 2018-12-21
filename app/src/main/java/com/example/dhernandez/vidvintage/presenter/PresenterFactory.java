@@ -9,13 +9,14 @@ import android.support.annotation.NonNull;
 
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter.LoginPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
+import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.ProfilePresenter;
 import com.example.dhernandez.vidvintage.presenter.SplashPresenter.SplashPresenter;
 import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 import com.example.dhernandez.vidvintage.repository.VintageRepository.IVintageRepository;
@@ -23,6 +24,7 @@ import com.example.dhernandez.vidvintage.repository.VintageRepository.IVintageRe
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by lsroa on 8/5/18.
@@ -34,10 +36,11 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
     //We can inject the Shared data between presenters from here, providing it from the DataModule
     //The share data should be wrapped in LiveData object to preserve the lifecicle of the viewmodels presenters
     @Inject
+    @Named("feed")
     MutableLiveData<List<ArticleVO>> feedArticles;
 
     @Inject
-    MutableLiveData <List<Cocktail>> cocktailList;
+    MutableLiveData <List<CocktailVO>> cocktailList;
 
     @Inject
     ILocalStorageRepository localStorageRepository;
@@ -47,6 +50,13 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
 
     @Inject
     IVintageRepository vintageRepository;
+
+    @Inject
+    @Named("favourites")
+    MutableLiveData<List<ArticleVO>> favouriteArticles;
+
+    @Inject
+    MutableLiveData<ArticleVO> articleDetail;
 
     public PresenterFactory(@NonNull Application application) {
         super(application);
@@ -67,13 +77,19 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
             return (T) new MainPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(FeedRssPresenter.class)) {
             //noinspection unchecked
-            return (T) new FeedRssPresenter(feedArticles);
+            return (T) new FeedRssPresenter(feedArticles, localStorageRepository, articleDetail);
         }if (modelClass.isAssignableFrom(CocktailsMenuPresenter.class)) {
             //noinspection unchecked
             return (T) new CocktailsMenuPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
         }if (modelClass.isAssignableFrom(MenuListPresenter.class)) {
             //noinspection unchecked
             return (T) new MenuListPresenter(cocktailList, vintageRepository);
+        }if (modelClass.isAssignableFrom(ProfilePresenter.class)) {
+            //noinspection unchecked
+            return (T) new ProfilePresenter(favouriteArticles, articleDetail, localStorageRepository);
+        }if (modelClass.isAssignableFrom(ArticlePresenter.class)) {
+            //noinspection unchecked
+            return (T) new ArticlePresenter(articleDetail, localStorageRepository);
         }else{
             throw new IllegalArgumentException("Unknown ViewModel class".concat(modelClass.getCanonicalName()));
         }

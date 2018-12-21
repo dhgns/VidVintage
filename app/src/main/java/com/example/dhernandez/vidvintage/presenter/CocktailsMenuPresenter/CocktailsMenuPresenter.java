@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
 import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 
@@ -31,7 +31,7 @@ import static com.example.dhernandez.vidvintage.Utils.Constants.USER;
 public class CocktailsMenuPresenter extends ViewModel implements ICocktailsMenuPresenter {
 
     private final MutableLiveData<LoadedPreferences> loadedPreferences;
-    private MutableLiveData<List<Cocktail>> cocktailListMLD;
+    private MutableLiveData<List<CocktailVO>> cocktailListMLD;
     private MutableLiveData<Constants.Screens> navigateTo;
     private MutableLiveData<Boolean> showPreferences;
     private MutableLiveData<Boolean> darkThemeActive;
@@ -77,7 +77,7 @@ public class CocktailsMenuPresenter extends ViewModel implements ICocktailsMenuP
 
 
     @Override
-    public LiveData<List<Cocktail>> getCocktailsList() {
+    public LiveData<List<CocktailVO>> getCocktailsList() {
         return this.cocktailListMLD;
     }
 

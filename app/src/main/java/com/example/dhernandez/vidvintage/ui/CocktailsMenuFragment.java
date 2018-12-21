@@ -1,21 +1,27 @@
 package com.example.dhernandez.vidvintage.ui;
 
+import android.animation.ObjectAnimator;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.transition.ChangeBounds;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageButton;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.ICocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
@@ -38,7 +44,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
     PresenterFactory presenterFactory;
     ICocktailsMenuPresenter presenter;
 
-    private List<Cocktail> cocktails;
+    private List<CocktailVO> cocktailVOS;
     PreferencesDialog preferencesDialog;
     private Boolean fullScreenActive;
 
@@ -60,8 +66,9 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
         ButterKnife.bind(this, view);
 
         presenter.getCocktailsList().observe(this, cocktails -> {
-            this.cocktails = cocktails;
+            this.cocktailVOS = cocktails;
         });
+
         presenter.getNavigateTo().observe(this, screen -> {
             if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -150,8 +157,15 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
     }
 
     @OnClick(R.id.cocktail_menu_config_button)
-    public void onPreferencesClick() {
-        presenter.showPreferences();
+    public void onPreferencesClick(ImageButton imageButton) {
+        ObjectAnimator animation = ObjectAnimator.ofFloat(imageButton, "rotationY", 0.0f, 360f);
+        animation.setDuration(720);
+        animation.setRepeatCount(ObjectAnimator.RESTART);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.start();
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> presenter.showPreferences(),100);
     }
 
     // This snippet hides the system bars.

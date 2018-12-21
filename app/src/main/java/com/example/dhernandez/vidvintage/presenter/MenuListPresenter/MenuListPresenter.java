@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.dhernandez.vidvintage.application.MyApplication;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.ErrorComm;
 import com.example.dhernandez.vidvintage.repository.VintageRepository.IVintageRepository;
 
@@ -17,9 +17,9 @@ import java.util.List;
 public class MenuListPresenter  extends ViewModel implements IMenuListPresenter{
 
     private IVintageRepository vintageRepository;
-    private MutableLiveData<List<Cocktail>> cocktailListMLD;
+    private MutableLiveData<List<CocktailVO>> cocktailListMLD;
 
-    public MenuListPresenter(MutableLiveData<List<Cocktail>> cocktailList,
+    public MenuListPresenter(MutableLiveData<List<CocktailVO>> cocktailList,
                              IVintageRepository vintageRepository){
         //Import the presenter in the application component to make The job of Dagger
         //a little bit easier by the time it will have to resolve dependencies
@@ -35,13 +35,13 @@ public class MenuListPresenter  extends ViewModel implements IMenuListPresenter{
         vintageRepository.getCocktailsMenu().observeForever(cocktailList->{
             if(cocktailList != null){
                 if(cocktailList.getErrorComm().getStatus() == ErrorComm.STATUS.NO_ERROR)
-                    cocktailListMLD.setValue(cocktailList.getCocktails());
+                    cocktailListMLD.setValue(cocktailList.getCocktailVOS());
             }
         });
     }
 
     @Override
-    public MutableLiveData<List<Cocktail>> getCocktails() {
+    public MutableLiveData<List<CocktailVO>> getCocktails() {
         return this.cocktailListMLD;
     }
 

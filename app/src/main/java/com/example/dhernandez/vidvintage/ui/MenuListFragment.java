@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.CocktailsMenuAdapter;
-import com.example.dhernandez.vidvintage.entity.Cocktail;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.IMenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
@@ -40,7 +40,7 @@ public class MenuListFragment extends Fragment {
     RecyclerView recyclerView;
 
     private CocktailsMenuAdapter cocktailListAdapter;
-    private List<Cocktail> cocktailList;
+    private List<CocktailVO> cocktailVOList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class MenuListFragment extends Fragment {
 
         presenter.getCocktails().observe(this, cocktails -> {
             if(cocktails != null) {
-                this.cocktailList = cocktails;
+                this.cocktailVOList = cocktails;
                 setUpRecyclerView();
             }
             else
@@ -71,7 +71,7 @@ public class MenuListFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        cocktailListAdapter = new CocktailsMenuAdapter(getContext(), this.cocktailList);
+        cocktailListAdapter = new CocktailsMenuAdapter(getContext(), this.cocktailVOList);
 
         cocktailListAdapter.setOnClickListener(new RecyclerView.OnClickListener() {
             @Override
