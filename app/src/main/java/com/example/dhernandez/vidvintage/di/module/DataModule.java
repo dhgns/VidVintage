@@ -45,7 +45,20 @@ public class DataModule {
 
     @Provides
     @Singleton
+    @Named("favourites")
+    MutableLiveData<List<CocktailVO>> getFavouriteCocktails() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    @Singleton
     MutableLiveData<ArticleVO> getArticleDetail() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    @Singleton
+    MutableLiveData<CocktailVO> getCocktailDetail() {
         return new MutableLiveData<>();
     }
 

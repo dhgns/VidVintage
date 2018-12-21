@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.ArticlesAdapter;
+import com.example.dhernandez.vidvintage.Utils.Adapters.ArticlesAdapter;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;

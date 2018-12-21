@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
-import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.CocktailDTO;
 import com.example.dhernandez.vidvintage.entity.CocktailsMenuResponse;
 import com.example.dhernandez.vidvintage.entity.ErrorComm;
 import com.example.dhernandez.vidvintage.entity.mapper.MapperCocktailResponse;
@@ -43,14 +43,14 @@ public class VintageRepository implements IVintageRepository {
     }
 
     private LiveData<CocktailsMenuResponse> getCocktails(MutableLiveData<CocktailsMenuResponse> cocktailsMenuResponseMLD) {
-        Call<List<CocktailDAO>> call = retrofit.create(IVintageAPI.class).getCocktails();
+        Call<List<CocktailDTO>> call = retrofit.create(IVintageAPI.class).getCocktails();
 
-        call.enqueue(new Callback<List<CocktailDAO>>() {
+        call.enqueue(new Callback<List<CocktailDTO>>() {
             CocktailsMenuResponse cocktailsMenuResponse;
             ErrorComm errorComm;
 
             @Override
-            public void onResponse(Call<List<CocktailDAO>> call, Response<List<CocktailDAO>> response) {
+            public void onResponse(Call<List<CocktailDTO>> call, Response<List<CocktailDTO>> response) {
                 List<CocktailVO> cocktailVOList = null;
                 if (response.code() == 200) {
                     errorComm = new ErrorComm("Successfull response", response.code(), ErrorComm.STATUS.NO_ERROR);
@@ -67,7 +67,7 @@ public class VintageRepository implements IVintageRepository {
             }
 
             @Override
-            public void onFailure(Call<List<CocktailDAO>> call, Throwable t) {
+            public void onFailure(Call<List<CocktailDTO>> call, Throwable t) {
                 errorComm = new ErrorComm("Error", 500, ErrorComm.STATUS.ERROR);
                 cocktailsMenuResponseMLD.setValue(new CocktailsMenuResponse(null, errorComm));
             }

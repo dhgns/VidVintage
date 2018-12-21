@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.Utils;
+package com.example.dhernandez.vidvintage.Utils.Adapters;
 
 import android.app.Application;
 import android.os.Build;

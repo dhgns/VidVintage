@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.Utils;
+package com.example.dhernandez.vidvintage.Utils.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by dhernandez on 03/09/2018.
  */
 
-class TagsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TagsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<String> tags;
 

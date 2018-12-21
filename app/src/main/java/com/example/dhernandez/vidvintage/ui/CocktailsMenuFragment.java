@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -92,7 +90,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
                     transaction.replace(container.getId(), fragment).addToBackStack(null).commit();
                     presenter.getNavigateTo().setValue(null);
                 }
-                if(intent != null){
+                if (intent != null) {
                     startActivity(intent);
                 }
             }
@@ -114,7 +112,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
     }
 
     private void showDarkTheme(Boolean darkThemeActive) {
-        if(darkThemeActive != null) {
+        if (darkThemeActive != null) {
             Drawable bg;
             if (darkThemeActive) {
                 bg = getResources().getDrawable(R.drawable.cocktail_menu_item_bg);
@@ -127,7 +125,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
     }
 
     private void showPreferencesDialog(Boolean showDialog) {
-        if (showDialog!= null && showDialog) {
+        if (showDialog != null && showDialog) {
             presenter.updateActivePreferences();
             preferencesDialog = new PreferencesDialog(presenter, getContext(), getActivity());
             preferencesDialog.show(getChildFragmentManager(), null);
@@ -165,7 +163,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
         animation.start();
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> presenter.showPreferences(),100);
+        handler.postDelayed(() -> presenter.showPreferences(), 100);
     }
 
     // This snippet hides the system bars.
@@ -193,7 +191,7 @@ public class CocktailsMenuFragment extends Fragment implements View.OnSystemUiVi
 
     @Override
     public void onSystemUiVisibilityChange(int i) {
-        if(this.fullScreenActive)
+        if (this.fullScreenActive)
             hideSystemUI();
     }
 }

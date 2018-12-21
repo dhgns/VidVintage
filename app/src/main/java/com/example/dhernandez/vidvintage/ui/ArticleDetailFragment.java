@@ -17,10 +17,8 @@ import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
-import com.example.dhernandez.vidvintage.presenter.ArticlePresenter;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.IFeedRssPresenter;
-import com.example.dhernandez.vidvintage.presenter.IArticlePresenter;
+import com.example.dhernandez.vidvintage.presenter.ArticlePresenter.ArticlePresenter;
+import com.example.dhernandez.vidvintage.presenter.ArticlePresenter.IArticlePresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 import com.squareup.picasso.Picasso;
 

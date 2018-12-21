@@ -7,7 +7,9 @@ import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.DAO.ArticleDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
 import com.example.dhernandez.vidvintage.entity.mapper.ArticleMapper;
+import com.example.dhernandez.vidvintage.entity.mapper.CocktailMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,7 @@ public class LocalStorageRepository implements ILocalStorageRepository {
         List<CocktailVO> value = new ArrayList<>();
         /*
         List<CocktailVO> value = CocktailMapper.mapperDAOtoVO(
-                realm.where(CocktailDAO.class).findAll());
+                realm.where(CocktailDTO.class).findAll());
                 */
 
         List<CocktailVO> filteredValue = new ArrayList<>();
@@ -142,6 +144,11 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     @Override
     public List<ArticleVO> getFavouriteArticles() {
         return ArticleMapper.mapperDAOtoVO(realm.where(ArticleDAO.class).findAll());
+    }
+
+    @Override
+    public List<CocktailVO> getFavouriteCocktails() {
+        return CocktailMapper.mapperDAOtoVO(realm.where(CocktailDAO.class).findAll());
     }
 
 }

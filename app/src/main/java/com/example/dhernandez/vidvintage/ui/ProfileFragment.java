@@ -16,9 +16,12 @@ import android.widget.LinearLayout;
 
 import com.example.dhernandez.vidvintage.BuildConfig;
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.ArticlesAdapter;
+import com.example.dhernandez.vidvintage.Utils.Adapters.ArticlesAdapter;
+import com.example.dhernandez.vidvintage.Utils.Adapters.CocktailsAdapter;
 import com.example.dhernandez.vidvintage.Utils.Constants;
+import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.IProfilePresenter;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.ProfilePresenter;
@@ -29,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
@@ -41,6 +45,8 @@ public class ProfileFragment extends Fragment {
     PresenterFactory presenterFactory;
     IProfilePresenter presenter;
 
+    PreferencesDialog preferencesDialog;
+
     @BindView(R.id.profile_articles_recyclerview)
     RecyclerView profileArticlesRecyclerView;
     @BindView(R.id.profile_cocktails_recyclerview)
@@ -52,6 +58,7 @@ public class ProfileFragment extends Fragment {
     LinearLayout localsMenu;
 
     private ArticlesAdapter articlesAdapter;
+    private CocktailsAdapter cocktailsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,12 +79,38 @@ public class ProfileFragment extends Fragment {
 
         initMenu();
 
+        presenter.getActiveSection().observe(this, subSection -> {
+            switch (subSection) {
+                case ARTICLES:
+                    showArticles();
+                    break;
+                case COCKTAILS:
+                    showCocktails();
+                    break;
+                case NEW_COCKTAIL:
+                    showNewCocktail();
+                    break;
+                default:
+                    showArticles();
+                    break;
+            }
+        });
+        
         presenter.getFavouriteArticles().observe(this,
                 articles -> {
                     if (articles != null) {
-                        initAdapters(articles);
+                        initArticlesAdapter(articles);
                     } else {
                         profileArticlesRecyclerView.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+        presenter.getFavouriteCocktails().observe(this,
+                cocktails -> {
+                    if (cocktails != null) {
+                        initCocktailsAdapter(cocktails);
+                    } else {
+
                     }
                 });
 
@@ -99,6 +132,22 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+
+    private void showNewCocktail() {
+        this.profileCocktailRecyclerView.setVisibility(View.GONE);
+        this.profileArticlesRecyclerView.setVisibility(View.GONE);
+    }
+
+    private void showCocktails() {
+        this.profileCocktailRecyclerView.setVisibility(View.VISIBLE);
+        this.profileArticlesRecyclerView.setVisibility(View.GONE);
+    }
+
+    private void showArticles() {
+        this.profileCocktailRecyclerView.setVisibility(View.GONE);
+        this.profileArticlesRecyclerView.setVisibility(View.VISIBLE);
+    }
+
     private void initMenu() {
         if (BuildConfig.FLAVOR.equals(BuildConfig.LOCAL)) {
             localsMenu.setVisibility(View.VISIBLE);
@@ -109,18 +158,45 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void initAdapters(List<ArticleVO> articles) {
+    private void initCocktailsAdapter(List<CocktailVO> cocktails) {
+        cocktailsAdapter = new CocktailsAdapter(cocktails);
+
+        cocktailsAdapter.setOnClickListener(view -> onCocktailClick(profileCocktailRecyclerView.getChildAdapterPosition(view)));
+
+        profileCocktailRecyclerView.setAdapter(cocktailsAdapter);
+        profileCocktailRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void onCocktailClick(int childAdapterPosition) {
+        presenter.showCocktailDetail(childAdapterPosition);
+    }
+
+    private void initArticlesAdapter(List<ArticleVO> articles) {
         articlesAdapter = new ArticlesAdapter(articles);
 
         articlesAdapter.setOnClickListener(view -> onArticleClick(profileArticlesRecyclerView.getChildAdapterPosition(view)));
 
         profileArticlesRecyclerView.setAdapter(articlesAdapter);
         profileArticlesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
     }
 
     private void onArticleClick(int childAdapterPosition) {
         presenter.showArticleDetail(childAdapterPosition);
+    }
+
+    @OnClick({R.id.profile_menu_articles, R.id.profile_menu_users_articles})
+    public void onArticlesClick() {
+        presenter.getActiveSection().setValue(Constants.SubSections.ARTICLES);
+    }
+
+    @OnClick({R.id.profile_menu_users_cocktails, R.id.profile_menu_cocktails})
+    public void onCocktailsClick() {
+        presenter.getActiveSection().setValue(Constants.SubSections.COCKTAILS);
+    }
+
+    @OnClick(R.id.profile_menu_new_cocktail)
+    public void onNewCocktailClick() {
+        presenter.getActiveSection().setValue(Constants.SubSections.NEW_COCKTAIL);
     }
 
     @Override

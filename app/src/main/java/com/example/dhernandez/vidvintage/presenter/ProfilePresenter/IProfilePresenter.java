@@ -1,9 +1,11 @@
 package com.example.dhernandez.vidvintage.presenter.ProfilePresenter;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
+import com.example.dhernandez.vidvintage.entity.CocktailVO;
 
 import java.util.List;
 
@@ -20,4 +22,10 @@ public interface IProfilePresenter {
     MutableLiveData<Constants.Screens> getNavigateTo();
 
     void refreshFavourites();
+
+    void showCocktailDetail(int childAdapterPosition);
+
+    LiveData<List<CocktailVO>> getFavouriteCocktails();
+
+    MutableLiveData<Constants.SubSections> getActiveSection();
 }

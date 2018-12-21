@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmField;
 import io.realm.annotations.Required;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,16 +15,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Created by dhernandez on 21/12/2018.
+ * Created by dhernandez on 03/09/2018.
  */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class CocktailDAO extends RealmObject{
-    @Required
+public class CocktailDTO {
+
     @SerializedName("name")
     String name;
     @SerializedName("author")
@@ -32,9 +30,9 @@ public class CocktailDAO extends RealmObject{
     @SerializedName("alcoholic")
     Boolean alcoholic;
     @SerializedName("tags")
-    RealmList<String> tags;
+    List<String> tags;
     @SerializedName("ingredients")
-    RealmList<IngredientDAO> ingredients;
+    List<IngredientDAO> ingredients;
     @SerializedName("receipt")
     String receipt;
     @SerializedName("video")
@@ -48,4 +46,5 @@ public class CocktailDAO extends RealmObject{
 
     @PrimaryKey
     String id;
+
 }

@@ -5,7 +5,8 @@ package com.example.dhernandez.vidvintage.Utils;
  */
 
 public class Constants {
-    public enum Screens { MAIN, RSS, PROFILE, COCKTAILS_MENU, ARTICLE_DETAIL, LOGIN, GIN_MENU, RUM_MENU, OTHER_MENU, WHISKY_MENU};
+    public enum Screens { MAIN, RSS, PROFILE, COCKTAILS_MENU, ARTICLE_DETAIL, LOGIN, GIN_MENU, RUM_MENU, OTHER_MENU, COCKTAIL_DETAIL, WHISKY_MENU}
+    public enum SubSections { ARTICLES, COCKTAILS, NEW_COCKTAIL}
     public enum Themes { LIGHT, DARK}
     public static final String THEME_KEY = "app_theme";
     public static final String SESSION_KEY = "app_save_session";

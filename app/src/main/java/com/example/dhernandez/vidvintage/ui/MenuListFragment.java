@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.CocktailsMenuAdapter;
+import com.example.dhernandez.vidvintage.Utils.Adapters.CocktailsMenuAdapter;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.IMenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
@@ -67,6 +69,22 @@ public class MenuListFragment extends Fragment {
                 presenter.getCocktails();
         });
 
+        presenter.getNavigateTo().observe(this, screen -> {
+            if(screen != null){
+                Fragment fragment = null;
+                switch (screen){
+                    case COCKTAIL_DETAIL:
+                        fragment = new CocktailDetailFragment();
+                        break;
+                }
+                if(fragment != null){
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+
+                    transaction.replace(container.getId(), fragment).addToBackStack(null).commit();
+                }
+            }
+        });
         return view;
     }
 
@@ -87,4 +105,5 @@ public class MenuListFragment extends Fragment {
     private void onCocktailClick(int cocktailIndex){
         presenter.showCocktailDetail(cocktailIndex);
     }
+
 }

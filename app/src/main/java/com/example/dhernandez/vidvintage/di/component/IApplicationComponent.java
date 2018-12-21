@@ -5,7 +5,7 @@ import com.example.dhernandez.vidvintage.di.module.ApplicationModule;
 import com.example.dhernandez.vidvintage.di.module.RepositoryModule;
 import com.example.dhernandez.vidvintage.di.module.DataModule;
 import com.example.dhernandez.vidvintage.di.module.UIModule;
-import com.example.dhernandez.vidvintage.presenter.ArticlePresenter;
+import com.example.dhernandez.vidvintage.presenter.ArticlePresenter.ArticlePresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.LoginPresenter.LoginPresenter;

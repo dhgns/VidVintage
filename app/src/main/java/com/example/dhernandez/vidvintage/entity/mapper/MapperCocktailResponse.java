@@ -2,7 +2,7 @@ package com.example.dhernandez.vidvintage.entity.mapper;
 
 import com.example.dhernandez.vidvintage.entity.Author;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
-import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.CocktailDTO;
 import com.example.dhernandez.vidvintage.entity.Ingredient;
 import com.example.dhernandez.vidvintage.entity.DAO.IngredientDAO;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class MapperCocktailResponse {
-    public static List<CocktailVO> CocktailDAOtoCocktail(List<CocktailDAO> value) {
+    public static List<CocktailVO> CocktailDAOtoCocktail(List<CocktailDTO> value) {
         List<CocktailVO> aux = new ArrayList<>();
         if (value != null) {
             for (int i = 0; i < value.size(); i++) {
@@ -24,7 +24,7 @@ public class MapperCocktailResponse {
         return aux;
     }
 
-    private static CocktailVO CocktailDAOtoCocktail(CocktailDAO value) {
+    private static CocktailVO CocktailDAOtoCocktail(CocktailDTO value) {
         CocktailVO aux = new CocktailVO();
 
         if(value.getAlcoholic() != null)

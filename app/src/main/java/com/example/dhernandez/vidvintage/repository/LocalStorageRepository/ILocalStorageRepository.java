@@ -35,5 +35,7 @@ public interface ILocalStorageRepository {
     void addArticleFavourite(ArticleVO value);
 
     List<ArticleVO> getFavouriteArticles();
+
+    List<CocktailVO> getFavouriteCocktails();
 }
 
