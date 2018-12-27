@@ -32,5 +32,14 @@
     <string name="preferences_dialog_session">Mantener sesión iniciada</string>
     <string name="preferences_dialog_close_session">Cerrar Sesión</string>
     <string name="app_title">Vi d\' Vintage</string>
+    <string name="color_subsection_active">#99ccff</string>
+    <string name="color_inactive_subection">#666666</string>
+    <string name="no_cocktails_yet">No cocktails yet! Take a look to the menu</string>
+    <string name="no_articles_yet">No articles saved! Check the feed for news</string>
+    <string name="new_cocktail_section">Service not available yet</string>
+    <string name="section_title_no_title" />
+    <string name="section_title_gin">Gin\'s</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="load_from_gallery">Load from gallery</string>
 
 </resources>

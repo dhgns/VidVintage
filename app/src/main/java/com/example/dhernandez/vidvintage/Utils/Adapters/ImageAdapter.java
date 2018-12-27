@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.ui.MainActivity;
 
 /**
  * Created by dhernandez on 05/09/2018.

@@ -2,12 +2,15 @@ package com.example.dhernandez.vidvintage.repository.LocalStorageRepository;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
+import com.example.dhernandez.vidvintage.Utils.PictureProfileMapper;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.DAO.ArticleDAO;
 import com.example.dhernandez.vidvintage.entity.DAO.CocktailDAO;
+import com.example.dhernandez.vidvintage.entity.DAO.PictureProfileDAO;
 import com.example.dhernandez.vidvintage.entity.mapper.ArticleMapper;
 import com.example.dhernandez.vidvintage.entity.mapper.CocktailMapper;
 
@@ -81,10 +84,10 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     @Override
     public void saveCocktail(CocktailVO cocktailVO) {
         realm.beginTransaction();
-        /*
+
         realm.insertOrUpdate(com.example.dhernandez.vidvintage.entity.mapper.
                 CocktailMapper.mapperVOtoDAO(cocktailVO));
-                */
+
         realm.commitTransaction();
     }
 
@@ -94,7 +97,7 @@ public class LocalStorageRepository implements ILocalStorageRepository {
 
         List<CocktailVO> value = new ArrayList<>();
         /*
-        List<CocktailVO> value = CocktailMapper.mapperDAOtoVO(
+        List<CocktailVO> value = CocktailMapper.mapperDTOtoVO(
                 realm.where(CocktailDTO.class).findAll());
                 */
 
@@ -118,7 +121,7 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     }
 
     @Override
-    public void removeFavourite(ArticleVO value) {
+    public void removeFavouriteArticle(ArticleVO value) {
         RealmResults<ArticleDAO> results = realm.where(ArticleDAO.class)
                 .equalTo("url", value.getUrl()).findAllAsync();
 
@@ -149,6 +152,40 @@ public class LocalStorageRepository implements ILocalStorageRepository {
     @Override
     public List<CocktailVO> getFavouriteCocktails() {
         return CocktailMapper.mapperDAOtoVO(realm.where(CocktailDAO.class).findAll());
+    }
+
+    @Override
+    public CocktailVO getFavouriteCocktail(CocktailVO value) {
+        return CocktailMapper.mapperDAOtoVO(realm.where(CocktailDAO.class).equalTo("id", value.getId()).findFirst());
+    }
+
+    @Override
+    public void removeFavouriteCocktail(CocktailVO value) {
+        RealmResults<CocktailDAO> results = realm.where(CocktailDAO.class)
+                .equalTo("name", value.getName()).findAllAsync();
+
+        results.addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<CocktailDAO>>() {
+            @Override
+            public void onChange(RealmResults<CocktailDAO> cocktailDAOS, OrderedCollectionChangeSet changeSet) {
+                realm.beginTransaction();
+                results.deleteAllFromRealm();
+                realm.commitTransaction();
+                results.removeChangeListener(this);
+            }
+        });
+    }
+
+    @Override
+    public void saveImage(String email, Bitmap value) {
+        realm = Realm.getDefaultInstance();
+        realm.refresh();
+        realm.executeTransactionAsync(
+                realmAux -> realmAux.insertOrUpdate(PictureProfileMapper.mapperVOtoDAO(email, value)));
+    }
+
+    @Override
+    public Bitmap loadImage(String email){
+        return PictureProfileMapper.mapperDAOtoVO(realm.where(PictureProfileDAO.class).equalTo("id", email).findFirst());
     }
 
 }

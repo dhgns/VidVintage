@@ -50,7 +50,7 @@ public class ArticlePresenter extends ViewModel implements IArticlePresenter {
 
     @Override
     public void removeFavouriteArticle() {
-        localStorageRepository.removeFavourite(this.articleDetail.getValue());
+        localStorageRepository.removeFavouriteArticle(this.articleDetail.getValue());
     }
 
     @Override

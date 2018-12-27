@@ -1,7 +1,8 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Fragments;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Adapters.TagsAdapter;
@@ -20,6 +23,7 @@ import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.CocktailDetailPresenter.CocktailDetailPresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailDetailPresenter.ICocktailDetailPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
@@ -49,6 +54,9 @@ public class CocktailDetailFragment extends Fragment {
     TextView articleDescription;
     @BindView(R.id.cocktail_menu_item_tags_recycler_view)
     RecyclerView tagsRecyclerView;
+
+    @BindView(R.id.cocktail_detail_fav)
+    ImageButton cocktailFav;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +81,16 @@ public class CocktailDetailFragment extends Fragment {
             }
         });
 
+        presenter.getIsFavourite().observe(this, isFavourite -> {
+            Drawable favIcon;
+            if (isFavourite) {
+                favIcon = getResources().getDrawable(R.drawable.fav_icon_active);
+            } else {
+                favIcon = getResources().getDrawable(R.drawable.fav_icon_inactive);
+            }
+            cocktailFav.setImageDrawable(favIcon);
+        });
+
         return view;
     }
 
@@ -84,8 +102,8 @@ public class CocktailDetailFragment extends Fragment {
         if (cocktailVO.getUrlPhoto() == null || cocktailVO.getUrlPhoto().equals(""))
             cocktailImage.setVisibility(View.GONE);
         else
-            cocktailImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.sex_on_the_beach));
-        //Picasso.get().load(context.getResources().getDrawable(R.drawable.sex_on_the_beach)).into(cocktailImage);
+            //cocktailImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.sex_on_the_beach));
+            Picasso.get().load(cocktailVO.getUrlPhoto()).into(cocktailImage);
 
         List<String> tagsText = new ArrayList<>();
         tagsText.add("alcoholic");
@@ -115,6 +133,19 @@ public class CocktailDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        presenter.checkFavourite();
+    }
+
+    @OnClick(R.id.cocktail_detail_fav)
+    public void onFavClick() {
+        if(presenter.getIsFavourite().getValue()){
+            Toast.makeText(getContext(), getResources().getString(R.string.article_removed),
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getContext(), getResources().getString(R.string.article_added),
+                    Toast.LENGTH_SHORT).show();
+        }
+        presenter.onClickFav();
     }
 
 }

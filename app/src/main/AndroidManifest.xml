@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.Activities.SplashActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.Activities.LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -25,6 +25,8 @@ public class CocktailDTO {
 
     @SerializedName("name")
     String name;
+    @SerializedName("description")
+    String description;
     @SerializedName("author")
     CocktailAuthorDAO author;
     @SerializedName("alcoholic")

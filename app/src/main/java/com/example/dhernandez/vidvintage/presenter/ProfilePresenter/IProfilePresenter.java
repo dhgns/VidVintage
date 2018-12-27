@@ -2,6 +2,7 @@ package com.example.dhernandez.vidvintage.presenter.ProfilePresenter;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.graphics.Bitmap;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
@@ -28,4 +29,13 @@ public interface IProfilePresenter {
     LiveData<List<CocktailVO>> getFavouriteCocktails();
 
     MutableLiveData<Constants.SubSections> getActiveSection();
+
+    void setProfilePicture(Bitmap bitmap);
+
+    MutableLiveData<Bitmap> getProfilePicture();
+
+    void saveProfilePicture(String email);
+
+    void addNewCocktail();
+
 }

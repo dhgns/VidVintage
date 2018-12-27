@@ -1,30 +1,42 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Fragments;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dhernandez.vidvintage.BuildConfig;
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Adapters.ArticlesAdapter;
 import com.example.dhernandez.vidvintage.Utils.Adapters.CocktailsAdapter;
 import com.example.dhernandez.vidvintage.Utils.Constants;
-import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
+import com.example.dhernandez.vidvintage.Utils.NewProfilePicture;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.IProfilePresenter;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.ProfilePresenter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -44,8 +56,7 @@ public class ProfileFragment extends Fragment {
     @Inject
     PresenterFactory presenterFactory;
     IProfilePresenter presenter;
-
-    PreferencesDialog preferencesDialog;
+    IMainPresenter mainPresenter;
 
     @BindView(R.id.profile_articles_recyclerview)
     RecyclerView profileArticlesRecyclerView;
@@ -57,8 +68,39 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.profile_menu_locals)
     LinearLayout localsMenu;
 
+    @BindView(R.id.profile_holder_cocktails_number)
+    TextView cocktailsNumber;
+    @BindView(R.id.profile_holder_articles_number)
+    TextView articlesNumber;
+    @BindView(R.id.profile_holder_picture)
+    ImageView profilePicture;
+
+    @BindView(R.id.profile_menu_articles)
+    ImageButton articlesSection;
+    @BindView(R.id.profile_menu_cocktails)
+    ImageButton cocktailsSection;
+    @BindView(R.id.profile_menu_new_cocktail)
+    ImageButton addNewSection;
+    @BindView(R.id.profile_menu_users_articles)
+    ImageButton usersArticlesSection;
+    @BindView(R.id.profile_menu_users_cocktails)
+    ImageButton usersCocktailsSection;
+
+    @BindView(R.id.no_cocktails_view)
+    View noCocktails;
+    @BindView(R.id.no_articles_view)
+    View noArticles;
+    @BindView(R.id.new_cocktail_section)
+    View newSection;
+    @BindView(R.id.profile_holder_name)
+    TextView profileName;
+
     private ArticlesAdapter articlesAdapter;
     private CocktailsAdapter cocktailsAdapter;
+
+    int activeColor;
+    int inactiveColor;
+    private NewProfilePicture newProfilePicture;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +109,10 @@ public class ProfileFragment extends Fragment {
         AndroidSupportInjection.inject(this);
 
         presenter = ViewModelProviders.of(this, presenterFactory).get(ProfilePresenter.class);
+        mainPresenter = ViewModelProviders.of(getActivity(), presenterFactory).get(MainPresenter.class);
+
+        activeColor = Color.parseColor(getString(R.string.color_subsection_active));
+        inactiveColor = Color.parseColor(getString(R.string.color_inactive_subection));
 
     }
 
@@ -95,13 +141,15 @@ public class ProfileFragment extends Fragment {
                     break;
             }
         });
-        
+
         presenter.getFavouriteArticles().observe(this,
                 articles -> {
                     if (articles != null) {
                         initArticlesAdapter(articles);
+                        articlesNumber.setText(String.valueOf((articles.size())));
                     } else {
                         profileArticlesRecyclerView.setVisibility(View.INVISIBLE);
+                        articlesNumber.setText("-");
                     }
                 });
 
@@ -109,18 +157,21 @@ public class ProfileFragment extends Fragment {
                 cocktails -> {
                     if (cocktails != null) {
                         initCocktailsAdapter(cocktails);
+                        cocktailsNumber.setText(String.valueOf(cocktails.size()));
                     } else {
-
+                        cocktailsNumber.setText("-");
                     }
                 });
 
-        presenter.getNavigateTo().observe(this, screen -> {
+        mainPresenter.getNavigateTo().observe(this, screen -> {
             if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Fragment f = null;
                 if (screen == Constants.Screens.ARTICLE_DETAIL) {
                     f = new ArticleDetailFragment();
+                } else if (screen == Constants.Screens.RSS) {
+                    f = new FeedRssFragment();
                 }
                 if (f != null) {
                     transaction.replace(container.getId(), f).addToBackStack(null).commit();
@@ -129,23 +180,75 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        presenter.getProfilePicture().observe(this, pictureProfile -> {
+            if (pictureProfile != null) {
+                this.profilePicture.setImageBitmap(pictureProfile);
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                presenter.saveProfilePicture(mAuth.getCurrentUser().getEmail());
+            }
+        });
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        profileName.setText(mAuth.getCurrentUser().getEmail());
+
         return view;
     }
 
-
     private void showNewCocktail() {
+
         this.profileCocktailRecyclerView.setVisibility(View.GONE);
         this.profileArticlesRecyclerView.setVisibility(View.GONE);
+        this.newSection.setVisibility(View.VISIBLE);
+        this.addNewSection.setColorFilter(activeColor);
+        this.articlesSection.setColorFilter(inactiveColor);
+        this.cocktailsSection.setColorFilter(inactiveColor);
+
+        this.noArticles.setVisibility(View.GONE);
+        this.noCocktails.setVisibility(View.GONE);
+
     }
 
     private void showCocktails() {
         this.profileCocktailRecyclerView.setVisibility(View.VISIBLE);
         this.profileArticlesRecyclerView.setVisibility(View.GONE);
+        this.cocktailsSection.setColorFilter(activeColor);
+        this.articlesSection.setColorFilter(inactiveColor);
+        this.addNewSection.setColorFilter(inactiveColor);
+        this.usersArticlesSection.setColorFilter(inactiveColor);
+        this.usersCocktailsSection.setColorFilter(activeColor);
+
+        this.newSection.setVisibility(View.GONE);
+        this.noArticles.setVisibility(View.GONE);
+
+        if (presenter.getFavouriteCocktails().getValue() != null
+                && presenter.getFavouriteCocktails().getValue().isEmpty()) {
+            this.profileCocktailRecyclerView.setVisibility(View.GONE);
+            noCocktails.setVisibility(View.VISIBLE);
+        } else {
+            noCocktails.setVisibility(View.GONE);
+        }
     }
 
     private void showArticles() {
         this.profileCocktailRecyclerView.setVisibility(View.GONE);
         this.profileArticlesRecyclerView.setVisibility(View.VISIBLE);
+        this.articlesSection.setColorFilter(activeColor);
+
+        this.cocktailsSection.setColorFilter(inactiveColor);
+        this.addNewSection.setColorFilter(inactiveColor);
+        this.usersArticlesSection.setColorFilter(activeColor);
+        this.usersCocktailsSection.setColorFilter(inactiveColor);
+
+        this.noCocktails.setVisibility(View.GONE);
+        this.newSection.setVisibility(View.GONE);
+
+        if (presenter.getFavouriteArticles().getValue() != null
+                && presenter.getFavouriteArticles().getValue().isEmpty()) {
+            this.profileArticlesRecyclerView.setVisibility(View.GONE);
+            noArticles.setVisibility(View.VISIBLE);
+        } else {
+            noArticles.setVisibility(View.GONE);
+        }
     }
 
     private void initMenu() {
@@ -169,6 +272,7 @@ public class ProfileFragment extends Fragment {
 
     private void onCocktailClick(int childAdapterPosition) {
         presenter.showCocktailDetail(childAdapterPosition);
+        mainPresenter.getNavigateTo().setValue(Constants.Screens.COCKTAIL_DETAIL);
     }
 
     private void initArticlesAdapter(List<ArticleVO> articles) {
@@ -182,6 +286,14 @@ public class ProfileFragment extends Fragment {
 
     private void onArticleClick(int childAdapterPosition) {
         presenter.showArticleDetail(childAdapterPosition);
+        mainPresenter.getNavigateTo().setValue(Constants.Screens.ARTICLE_DETAIL);
+    }
+
+    @OnClick(R.id.profile_holder_picture)
+    public void onProfilePictureClick() {
+        newProfilePicture = new NewProfilePicture(presenter);
+        newProfilePicture.setCancelable(false);
+        newProfilePicture.show(getActivity().getFragmentManager(), null);
     }
 
     @OnClick({R.id.profile_menu_articles, R.id.profile_menu_users_articles})
@@ -196,13 +308,24 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.profile_menu_new_cocktail)
     public void onNewCocktailClick() {
-        presenter.getActiveSection().setValue(Constants.SubSections.NEW_COCKTAIL);
+        presenter.addNewCocktail();
+        //presenter.getActiveSection().setValue(Constants.SubSections.NEW_COCKTAIL);
+    }
+
+    @OnClick(R.id.no_articles_view)
+    public void onFeedRssClick() {
+        mainPresenter.getNavigateTo().setValue(Constants.Screens.RSS);
+    }
+
+    @OnClick(R.id.no_cocktails_view)
+    public void onCocktailsMenu() {
+        mainPresenter.getNavigateTo().setValue(Constants.Screens.COCKTAILS_MENU);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.refreshFavourites();
+        showArticles();
     }
-
 }

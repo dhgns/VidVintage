@@ -1,14 +1,14 @@
 package com.example.dhernandez.vidvintage.di.module;
 
-import com.example.dhernandez.vidvintage.ui.ArticleDetailFragment;
-import com.example.dhernandez.vidvintage.ui.CocktailDetailFragment;
-import com.example.dhernandez.vidvintage.ui.CocktailsMenuFragment;
-import com.example.dhernandez.vidvintage.ui.FeedRssFragment;
-import com.example.dhernandez.vidvintage.ui.LoginActivity;
-import com.example.dhernandez.vidvintage.ui.MainActivity;
-import com.example.dhernandez.vidvintage.ui.MenuListFragment;
-import com.example.dhernandez.vidvintage.ui.ProfileFragment;
-import com.example.dhernandez.vidvintage.ui.SplashActivity;
+import com.example.dhernandez.vidvintage.ui.Fragments.ArticleDetailFragment;
+import com.example.dhernandez.vidvintage.ui.Fragments.CocktailDetailFragment;
+import com.example.dhernandez.vidvintage.ui.Fragments.CocktailsMenuFragment;
+import com.example.dhernandez.vidvintage.ui.Fragments.FeedRssFragment;
+import com.example.dhernandez.vidvintage.ui.Activities.LoginActivity;
+import com.example.dhernandez.vidvintage.ui.Activities.MainActivity;
+import com.example.dhernandez.vidvintage.ui.Fragments.MenuListFragment;
+import com.example.dhernandez.vidvintage.ui.Fragments.ProfileFragment;
+import com.example.dhernandez.vidvintage.ui.Activities.SplashActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

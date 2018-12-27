@@ -14,7 +14,7 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoadedPreferences {
+public class UserPreferences {
     private Boolean activeSession;
     private Boolean saveSession;
     private Constants.Themes theme;

@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;

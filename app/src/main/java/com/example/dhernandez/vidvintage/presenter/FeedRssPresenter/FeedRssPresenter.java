@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.OnClick;
-
 /**
  * Created by dhernandez on 30/08/2018.
  */
@@ -51,12 +49,15 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
 
         //urlString = "https://www.reddit.com/r/cocktails/.rss";
         //urlString = "http://www.europapress.es/rss/rss.aspx?ch=00564";
-        //urlString = "http://rss.cnn.com/rss/edition_sport.rss";
+        urlString = "http://rss.cnn.com/rss/edition_sport.rss";
         //urlString = "https://www.cocacolaespana.es/Feeds/standard-rss-feed.xml";
-        //urlString = "http://rss.cnn.com/rss/edition.rss";
         //urlString = "https://www.nasa.gov/rss/dyn/educationnews.rss";
+        //urlString = "https://www.abarabove.com/blog/feed";
+        //urlString = "https://www.reddit.com/r/cocktails/.rss";
+        urlString = "http://imbibemagazine.com/category/article/cocktails-spirits-article/feed";
+        urlString = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        urlString = "http://rss.cnn.com/rss/edition.rss";
         urlString = "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml";
-
         readFeed();
     }
 
@@ -64,7 +65,6 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
     public void showArticleDetail(ArticleVO articleVO) {
         this.isFavourite.setValue(this.checkFavouriteArticle(articleVO.getUrl()));
         this.articleClicked.setValue(articleVO);
-        this.navigateTo.setValue(Constants.Screens.ARTICLE_DETAIL);
     }
 
     @Override
@@ -151,7 +151,6 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
             public void onError() {
                 showProgress.postValue(false);
                 showFeedReadError.postValue(true);
-
             }
         });
 
@@ -170,7 +169,7 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
 
     @Override
     public void removeFavouriteArticle() {
-        localStorageRepository.removeFavourite(this.articleClicked.getValue());
+        localStorageRepository.removeFavouriteArticle(this.articleClicked.getValue());
     }
 
     @Override
@@ -180,9 +179,9 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
 
     @Override
     public void toogleFavourite() {
-        if(this.isFavourite.getValue()){
+        if (this.isFavourite.getValue()) {
             this.removeFavouriteArticle();
-        }else{
+        } else {
             this.addFavouriteArticle();
         }
         this.isFavourite.setValue(!this.isFavourite.getValue());

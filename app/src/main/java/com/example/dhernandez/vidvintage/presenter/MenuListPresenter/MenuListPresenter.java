@@ -54,7 +54,6 @@ public class MenuListPresenter  extends ViewModel implements IMenuListPresenter{
     @Override
     public void showCocktailDetail(int cocktailIndex) {
         this.cocktailDetail.setValue(this.cocktailListMLD.getValue().get(cocktailIndex));
-        this.navigateTo.setValue(Constants.Screens.COCKTAIL_DETAIL);
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.application.MyApplication;
-import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
+import com.example.dhernandez.vidvintage.entity.UserPreferences;
 import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILocalStorageRepository;
 
 /**
@@ -14,7 +14,7 @@ import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILoca
 
 public class LoginPresenter extends ViewModel implements ILoginPresenter {
 
-    private final MutableLiveData<LoadedPreferences> loadedPreferences;
+    private final MutableLiveData<UserPreferences> loadedPreferences;
     private String email;
     private String password;
 
@@ -33,7 +33,7 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter {
     private MutableLiveData<Constants.Themes> appTheme;
 
     public LoginPresenter(ILocalStorageRepository localStorageRepository,
-                          MutableLiveData<LoadedPreferences> loadedPreferencesMutableLiveData) {
+                          MutableLiveData<UserPreferences> loadedPreferencesMutableLiveData) {
         //Import the presenter in the application component to make The job of Dagger
         //a little bit easier by the time it will have to resolve dependencies
         MyApplication.getApplicationComponent().inject(this);

@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Adapters.CocktailsMenuAdapter;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.IMenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.MenuListPresenter.MenuListPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
@@ -37,6 +39,7 @@ public class MenuListFragment extends Fragment {
     @Inject
     PresenterFactory presenterFactory;
     IMenuListPresenter presenter;
+    IMainPresenter mainPresenter;
 
     @BindView(R.id.menu_list_recycler_view)
     RecyclerView recyclerView;
@@ -51,6 +54,7 @@ public class MenuListFragment extends Fragment {
         AndroidSupportInjection.inject(this);
 
         presenter = ViewModelProviders.of(getActivity(),presenterFactory).get(MenuListPresenter.class);
+        mainPresenter = ViewModelProviders.of(getActivity(), presenterFactory).get(MainPresenter.class);
 
     }
 
@@ -69,34 +73,13 @@ public class MenuListFragment extends Fragment {
                 presenter.getCocktails();
         });
 
-        presenter.getNavigateTo().observe(this, screen -> {
-            if(screen != null){
-                Fragment fragment = null;
-                switch (screen){
-                    case COCKTAIL_DETAIL:
-                        fragment = new CocktailDetailFragment();
-                        break;
-                }
-                if(fragment != null){
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-
-                    transaction.replace(container.getId(), fragment).addToBackStack(null).commit();
-                }
-            }
-        });
         return view;
     }
 
     private void setUpRecyclerView() {
         cocktailListAdapter = new CocktailsMenuAdapter(getContext(), this.cocktailVOList);
 
-        cocktailListAdapter.setOnClickListener(new RecyclerView.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onCocktailClick(recyclerView.getChildAdapterPosition(view));
-            }
-        });
+        cocktailListAdapter.setOnClickListener(view -> onCocktailClick(recyclerView.getChildAdapterPosition(view)));
 
         recyclerView.setAdapter(cocktailListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -104,6 +87,7 @@ public class MenuListFragment extends Fragment {
 
     private void onCocktailClick(int cocktailIndex){
         presenter.showCocktailDetail(cocktailIndex);
+        mainPresenter.showCocktailDetail();
     }
 
 }

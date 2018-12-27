@@ -8,7 +8,7 @@ import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.entity.DAO.CocktailDTO;
 import com.example.dhernandez.vidvintage.entity.CocktailsMenuResponse;
 import com.example.dhernandez.vidvintage.entity.ErrorComm;
-import com.example.dhernandez.vidvintage.entity.mapper.MapperCocktailResponse;
+import com.example.dhernandez.vidvintage.entity.mapper.CocktailMapper;
 
 import java.util.List;
 
@@ -42,6 +42,42 @@ public class VintageRepository implements IVintageRepository {
         return cocktailsMenuMLD;
     }
 
+    @Override
+    public MutableLiveData<CocktailVO> addNewCocktail(CocktailVO cocktailVO) {
+        MutableLiveData<CocktailVO> response = new MutableLiveData<>();
+
+        this.addCocktail(response, cocktailVO);
+
+        return response;
+    }
+
+    private void addCocktail(MutableLiveData<CocktailVO> responseMLD, CocktailVO cocktailVO) {
+
+        Call<CocktailDTO> call = retrofit.create(IVintageAPI.class)
+                .addCocktail(CocktailMapper.mapperVOtoDTO(cocktailVO));
+
+        call.enqueue(new Callback<CocktailDTO>() {
+            @Override
+            public void onResponse(Call<CocktailDTO> call, Response<CocktailDTO> response) {
+                if(response.code() == 200) {
+                    CocktailVO cocktail = CocktailMapper.mapperDTOtoVO(response.body());
+
+                    responseMLD.setValue(cocktail);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CocktailDTO> call, Throwable t) {
+                if(call.isCanceled()){
+
+                }
+
+            }
+        });
+
+
+    }
+
     private LiveData<CocktailsMenuResponse> getCocktails(MutableLiveData<CocktailsMenuResponse> cocktailsMenuResponseMLD) {
         Call<List<CocktailDTO>> call = retrofit.create(IVintageAPI.class).getCocktails();
 
@@ -54,7 +90,7 @@ public class VintageRepository implements IVintageRepository {
                 List<CocktailVO> cocktailVOList = null;
                 if (response.code() == 200) {
                     errorComm = new ErrorComm("Successfull response", response.code(), ErrorComm.STATUS.NO_ERROR);
-                    cocktailVOList = MapperCocktailResponse.CocktailDAOtoCocktail(response.body());
+                    cocktailVOList = CocktailMapper.mapperDTOtoVO(response.body());
 
                     cocktailsMenuResponse = new CocktailsMenuResponse(cocktailVOList, errorComm);
                 } else {

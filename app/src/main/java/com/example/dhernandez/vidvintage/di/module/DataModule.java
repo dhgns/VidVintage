@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
-import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
+import com.example.dhernandez.vidvintage.entity.UserPreferences;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    MutableLiveData<LoadedPreferences> getLoadedPreferences() {
+    MutableLiveData<UserPreferences> getLoadedPreferences() {
         return new MutableLiveData<>();
     }
 

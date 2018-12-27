@@ -1,6 +1,7 @@
 package com.example.dhernandez.vidvintage.repository.LocalStorageRepository;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.graphics.Bitmap;
 
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
@@ -14,14 +15,17 @@ import java.util.List;
 public interface ILocalStorageRepository {
 
     void saveTheme(String key, String value);
+
     String loadTheme(String key);
 
     void saveString(String key, String value);
+
     String loadString(String key, String defaultValue);
 
     void deleteKey(String key);
 
     void saveBoolean(String sessionKey, boolean fullScreen);
+
     boolean loadBoolean(String key);
 
     void saveCocktail(CocktailVO cocktailVO);
@@ -30,12 +34,20 @@ public interface ILocalStorageRepository {
 
     ArticleVO getFavouriteArticle(String url);
 
-    void removeFavourite(ArticleVO value);
+    void removeFavouriteArticle(ArticleVO value);
 
     void addArticleFavourite(ArticleVO value);
 
     List<ArticleVO> getFavouriteArticles();
 
     List<CocktailVO> getFavouriteCocktails();
+
+    CocktailVO getFavouriteCocktail(CocktailVO value);
+
+    void removeFavouriteCocktail(CocktailVO value);
+
+    void saveImage(String email, Bitmap value);
+
+    Bitmap loadImage(String email);
 }
 

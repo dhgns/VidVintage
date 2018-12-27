@@ -1,70 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout android:id="@+id/cocktails_menu_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/cocktail_menu_item_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.v7.widget.Toolbar
-        android:background="@drawable/tool_bar_bg"
-        android:id="@+id/cocktails_menu_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tool_bar_heigth"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:paddingEnd="10dp"
-            android:alpha="1">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="8"
-                android:alpha="1"
-                android:fontFamily="@font/raleway_semibold"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/section_title_cocktails"
-                android:textAlignment="center"
-                android:textColor="@color/background_color"
-                android:textSize="24sp" />
-
-            <ImageButton
-                android:visibility="visible"
-                android:id="@+id/cocktail_menu_config_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:alpha="1"
-                android:background="@android:color/transparent"
-                android:scaleType="fitStart"
-                android:src="@drawable/icon_config" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:layout_marginBottom="58dp"
         android:orientation="vertical">
 

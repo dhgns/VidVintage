@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;

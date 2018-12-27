@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +96,8 @@ public class CocktailsMenuAdapter extends RecyclerView.Adapter<CocktailsMenuAdap
             if(cocktailVO.getUrlPhoto() == null || cocktailVO.getUrlPhoto().equals(""))
                 cocktailImage.setVisibility(View.GONE);
             else
-                cocktailImage.setImageDrawable(context.getDrawable(R.drawable.sex_on_the_beach));
-                //Picasso.get().load(context.getResources().getDrawable(R.drawable.sex_on_the_beach)).into(cocktailImage);
+                //cocktailImage.setImageDrawable(context.getDrawable(R.drawable.sex_on_the_beach));
+                Picasso.get().load(cocktailVO.getUrlPhoto()).into(cocktailImage);
 
             List<String> tagsText = new ArrayList<>();
             tagsText.add("alcoholic");

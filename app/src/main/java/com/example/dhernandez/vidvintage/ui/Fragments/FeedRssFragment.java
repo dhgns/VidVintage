@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.ui;
+package com.example.dhernandez.vidvintage.ui.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -7,8 +7,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,6 +24,8 @@ import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.FeedRssPresenter;
 import com.example.dhernandez.vidvintage.presenter.FeedRssPresenter.IFeedRssPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 
 import java.util.List;
@@ -33,7 +34,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
@@ -45,6 +45,7 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Inject
     PresenterFactory presenterFactory;
     IFeedRssPresenter presenter;
+    IMainPresenter mainPresenter;
 
     @BindView(R.id.recycle_view_rss)
     RecyclerView rss_recycler_view;
@@ -65,7 +66,8 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
         AndroidSupportInjection.inject(this);
 
         // Generate the presenter with activity context to share it with the article detail fragment
-        presenter = ViewModelProviders.of(getActivity(),presenterFactory).get(FeedRssPresenter.class);
+        presenter = ViewModelProviders.of(getActivity(), presenterFactory).get(FeedRssPresenter.class);
+        mainPresenter = ViewModelProviders.of(getActivity(), presenterFactory).get(MainPresenter.class);
 
     }
 
@@ -85,39 +87,29 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
         setUpRecyclerView();
 
         presenter.getFeedArticles().observe(this, articleVOS -> {
-            if(articleVOS != null && articleVOS != articles) {
+            if (articleVOS != null && articleVOS != articles) {
                 this.articles = articleVOS;
                 articlesAdapter.setListSource(articles);
                 articlesAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        presenter.getNavigateTo().observe(this, screen -> {
-            if (screen != null) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                Fragment f = null;
-                if (screen == Constants.Screens.ARTICLE_DETAIL) {
-                    f = new ArticleDetailFragment();
-                }
-                if (f != null) {
-                    transaction.replace(container.getId(), f).addToBackStack(null).commit();
-                    presenter.getNavigateTo().setValue(null);
-                }
-            }
-        });
-        presenter.showReadingProgress().observe(this, showProgress->{
-            if(showProgress){
+
+        presenter.showReadingProgress().observe(this, showProgress -> {
+            if (showProgress) {
                 swipeRefreshLayout.setRefreshing(true);
-            }
+            } else
+                swipeRefreshLayout.setRefreshing(false);
         });
         presenter.showFeedReadError().observe(this, this::showFeedError);
 
+        getActivity().findViewById(R.id.refresh_button_feed)
+                .setOnClickListener((refreshButton) -> this.forceFeedRefresh(refreshButton));
         return view;
     }
 
     private void showFeedError(Boolean show) {
-        if(show){
+        if (show) {
             Toast.makeText(getContext(), "Error reading Feed",
                     Toast.LENGTH_SHORT).show();
             presenter.showFeedReadError().setValue(false);
@@ -138,15 +130,17 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
         super.onStart();
     }
 
-    @OnClick(R.id.refresh_button_feed)
-    public void forceFeedRefresh(){
+    public void forceFeedRefresh(View refreshButton) {
+        refreshButton.animate().rotation(360).setInterpolator(new AccelerateDecelerateInterpolator());
+
         swipeRefreshLayout.setRefreshing(true);
         this.onRefresh();
     }
 
     private void onArticleClick(int childAdapterPosition) {
-        if(articles != null && !articles.isEmpty())
+        if (articles != null && !articles.isEmpty())
             presenter.showArticleDetail(articles.get(childAdapterPosition));
+        mainPresenter.getNavigateTo().setValue(Constants.Screens.ARTICLE_DETAIL);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -178,7 +172,6 @@ public class FeedRssFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
-
     }
 
     @Override

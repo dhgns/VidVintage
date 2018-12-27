@@ -25,4 +25,7 @@ public class CocktailVO {
     String cocktailUrl;
     String description;
 
+    public String getId() {
+        return name.trim();
+    }
 }

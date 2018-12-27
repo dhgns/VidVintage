@@ -10,6 +10,7 @@
     <color name="search_form_edit_text_background_color">#ebebeb</color>
     <color name="tag_bg_color">#af545e62</color>
     <color name="transparent">#00000000</color>
+    <color name="app_bg">#fafafa</color>
 
 
 </resources>

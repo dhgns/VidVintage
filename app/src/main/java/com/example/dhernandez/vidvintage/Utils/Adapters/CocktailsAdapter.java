@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class CocktailsAdapter extends RecyclerView.Adapter<CocktailsAdapter.Cock
     @Override
     public CocktailsAdapter.CocktailsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View cocktailView = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_row_view, parent, false);
+        View cocktailView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cocktail_fav_row_view, parent, false);
 
         CocktailsAdapter.CocktailsHolder cocktailsHolder = new CocktailsAdapter.CocktailsHolder(cocktailView);
 
@@ -64,26 +66,30 @@ public class CocktailsAdapter extends RecyclerView.Adapter<CocktailsAdapter.Cock
 
     public class CocktailsHolder extends RecyclerView.ViewHolder {
 
-        private ImageView articleImage;
-        private TextView articleTitle;
-        private TextView articleDescription;
+        private ImageView cocktailImage;
+        private TextView cocktailName;
+        private TextView cocktailDescription;
 
         public CocktailsHolder(View itemView) {
             super(itemView);
 
-            articleImage = itemView.findViewById(R.id.article_image);
-            articleTitle = itemView.findViewById(R.id.article_title);
-            articleDescription = itemView.findViewById(R.id.article_description);
+            cocktailImage = itemView.findViewById(R.id.cocktail_image);
+            cocktailName = itemView.findViewById(R.id.cocktail_name);
+            cocktailDescription = itemView.findViewById(R.id.cocktail_description);
 
             itemView.setOnClickListener(listener);
 
         }
 
         public void bind(CocktailVO cocktailVO) {
-
+            cocktailName.setText(cocktailVO.getName());
+            cocktailDescription.setText(cocktailVO.getDescription());
+            if (cocktailVO.getCocktailUrl() == null)
+                cocktailImage.setVisibility(View.GONE);
+            else
+                Picasso.get().load(cocktailVO.getUrlPhoto()).into(cocktailImage);
         }
     }
-
 
     public void setOnClickListener(RecyclerView.OnClickListener listener) {
         this.listener = listener;

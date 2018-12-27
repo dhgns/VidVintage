@@ -9,7 +9,7 @@
     android:background="@color/background_color"
     android:visibility="visible"
     android:id="@+id/login_view"
-    tools:context=".ui.LoginActivity"
+    tools:context=".ui.Activities.LoginActivity"
     android:paddingLeft="0dp">
 
     <!-- Background image -->

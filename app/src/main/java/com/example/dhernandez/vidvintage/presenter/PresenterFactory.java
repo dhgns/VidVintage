@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
-import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
+import com.example.dhernandez.vidvintage.entity.UserPreferences;
 import com.example.dhernandez.vidvintage.presenter.ArticlePresenter.ArticlePresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailDetailPresenter.CocktailDetailPresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
@@ -47,7 +47,7 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
     ILocalStorageRepository localStorageRepository;
 
     @Inject
-    MutableLiveData<LoadedPreferences> loadedPreferencesMutableLiveData;
+    MutableLiveData<UserPreferences> loadedPreferencesMutableLiveData;
 
     @Inject
     IVintageRepository vintageRepository;
@@ -84,7 +84,7 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
         }
         if (modelClass.isAssignableFrom(MainPresenter.class)) {
             //noinspection unchecked
-            return (T) new MainPresenter(localStorageRepository, loadedPreferencesMutableLiveData);
+            return (T) new MainPresenter(localStorageRepository, loadedPreferencesMutableLiveData, cocktailDetail);
         }
         if (modelClass.isAssignableFrom(FeedRssPresenter.class)) {
             //noinspection unchecked
@@ -104,7 +104,9 @@ public class PresenterFactory extends ViewModelProvider.AndroidViewModelFactory 
                     favouriteArticles,
                     favouriteCocktails,
                     articleDetail,
-                    localStorageRepository);
+                    cocktailDetail,
+                    localStorageRepository,
+                    vintageRepository);
         }
         if (modelClass.isAssignableFrom(ArticlePresenter.class)) {
             //noinspection unchecked

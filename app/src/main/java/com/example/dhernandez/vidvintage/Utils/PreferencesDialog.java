@@ -1,11 +1,12 @@
 package com.example.dhernandez.vidvintage.Utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.DialogFragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.entity.LoadedPreferences;
-import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.ICocktailsMenuPresenter;
+import com.example.dhernandez.vidvintage.entity.UserPreferences;
+import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +29,8 @@ import butterknife.OnClick;
 @SuppressLint("ValidFragment")
 public class PreferencesDialog extends DialogFragment implements View.OnSystemUiVisibilityChangeListener {
 
-    private LoadedPreferences loadedPreferences;
-    ICocktailsMenuPresenter presenter;
+    private UserPreferences userPreferences;
+    IMainPresenter presenter;
 
     @BindView(R.id.preferences_fullscreen_theme_light)
     Button lightThemeButton;
@@ -43,22 +44,18 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
     Drawable selectedButton;
     Drawable unselectedButton;
 
-    Context context;
-    FragmentActivity activity;
-    private Boolean fullScreenActive;
-    private Boolean saveSession;
+    Activity activity;
 
-    public PreferencesDialog(ICocktailsMenuPresenter presenter, Context context, FragmentActivity activity) {
+    public PreferencesDialog(IMainPresenter presenter, Activity activity) {
         super();
         this.presenter = presenter;
-        this.context = context;
         this.activity = activity;
 
-        selectedButton = context.getResources().getDrawable(R.drawable.button_selected);
-        unselectedButton = context.getResources().getDrawable(R.drawable.button_unselected);
+        selectedButton = activity.getResources().getDrawable(R.drawable.button_selected);
+        unselectedButton = activity.getResources().getDrawable(R.drawable.button_unselected);
 
-        presenter.getActivePreferences().observeForever(loadedPreferences -> {
-            this.loadedPreferences = loadedPreferences;
+        presenter.getPreferences().observeForever(loadedPreferences -> {
+            this.userPreferences = loadedPreferences;
         });
 
     }
@@ -74,7 +71,7 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
         super.onResume();
         new android.os.Handler().postDelayed(
                 () -> {
-                    if(loadedPreferences.getFullScreen())
+                    if (userPreferences.getFullScreen())
                         setImmersiveMode();
                 }, 10);
     }
@@ -90,10 +87,10 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
 
         setImmersiveMode();
 
-        this.fullScreenCheckbox.setChecked(loadedPreferences.getFullScreen());
-        this.saveSessionCheckBox.setChecked(loadedPreferences.getSaveSession());
+        this.fullScreenCheckbox.setChecked(userPreferences.getFullScreen());
+        this.saveSessionCheckBox.setChecked(userPreferences.getSaveSession());
 
-        if (loadedPreferences.getTheme().equals(Constants.Themes.DARK)) {
+        if (userPreferences.getTheme().equals(Constants.Themes.DARK)) {
             darkThemeButton.setBackground(selectedButton);
             lightThemeButton.setBackground(unselectedButton);
         } else {
@@ -108,7 +105,7 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content
         // doesn't resize when the system bars hide and show.
-        if (loadedPreferences.getFullScreen()) {
+        if (userPreferences.getFullScreen()) {
             View decorView = activity.getWindow().getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -149,9 +146,9 @@ public class PreferencesDialog extends DialogFragment implements View.OnSystemUi
     @OnClick(R.id.preferences_save_session_checkbox)
     public void onStoreSessionClick(CheckBox checkBox) {
         if (checkBox.isChecked()) {
-            presenter.setStoreSession(true);
+            presenter.saveSession(true);
         } else {
-            presenter.setStoreSession(false);
+            presenter.saveSession(false);
         }
     }
 
