@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.Utils;
+package com.example.dhernandez.vidvintage.Utils.DialogFragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -36,7 +36,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 @SuppressLint("ValidFragment")
-public class NewProfilePicture extends DialogFragment {
+public class NewProfilePictureDialog extends DialogFragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int PICK_IMAGE_REQUEST = 2;
     static final int CAMERA_PERMISIONS = 3;
@@ -48,7 +48,7 @@ public class NewProfilePicture extends DialogFragment {
     @BindView(R.id.load_photo)
     Button loadPhoto;
 
-    public NewProfilePicture(IProfilePresenter presenter) {
+    public NewProfilePictureDialog(IProfilePresenter presenter) {
         this.presenter = presenter;
     }
 

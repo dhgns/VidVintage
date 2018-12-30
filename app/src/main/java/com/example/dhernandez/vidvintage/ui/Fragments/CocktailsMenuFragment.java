@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dhernandez.vidvintage.R;
-import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
+import com.example.dhernandez.vidvintage.Utils.DialogFragments.PreferencesDialog;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.CocktailsMenuPresenter;
 import com.example.dhernandez.vidvintage.presenter.CocktailsMenuPresenter.ICocktailsMenuPresenter;

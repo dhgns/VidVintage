@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -36,6 +37,31 @@ public interface IProfilePresenter {
 
     void saveProfilePicture(String email);
 
+    MutableLiveData<Constants.Steps> getNewCocktailStep();
+
     void addNewCocktail();
 
+    void onNewCocktailBackClick();
+
+    void onNewCocktailNextClick();
+
+    MutableLiveData<String> getNewCocktailName();
+
+    MutableLiveData<String> getNewCocktailURL();
+
+    MutableLiveData<String> getNewCocktailDescription();
+
+    MutableLiveData<String> getNewCocktailReceipt();
+
+    MutableLiveData<FirebaseUser> getUsername();
+
+    void addNewIngredient(String s);
+
+    MutableLiveData<List<String>> getNewCocktailIngredients();
+
+    void removeIngredient(int position);
+
+    MutableLiveData<Integer> getShowError();
+
+    MutableLiveData<Boolean> getCleanFields();
 }

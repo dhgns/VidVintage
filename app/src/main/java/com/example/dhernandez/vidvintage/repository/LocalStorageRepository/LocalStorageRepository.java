@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
-import com.example.dhernandez.vidvintage.Utils.PictureProfileMapper;
+import com.example.dhernandez.vidvintage.entity.mapper.PictureProfileMapper;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;

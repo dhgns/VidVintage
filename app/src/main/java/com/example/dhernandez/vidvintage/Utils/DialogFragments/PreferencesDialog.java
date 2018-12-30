@@ -1,4 +1,4 @@
-package com.example.dhernandez.vidvintage.Utils;
+package com.example.dhernandez.vidvintage.Utils.DialogFragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.example.dhernandez.vidvintage.R;
+import com.example.dhernandez.vidvintage.Utils.Constants;
 import com.example.dhernandez.vidvintage.entity.UserPreferences;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
 

@@ -41,5 +41,19 @@
     <string name="section_title_gin">Gin\'s</string>
     <string name="take_photo">Take Photo</string>
     <string name="load_from_gallery">Load from gallery</string>
+    <string name="new_cocktail_name">Cocktail name</string>
+    <string name="new_cocktail_description">Cocktail Description</string>
+    <string name="new_cocktail_receipt">Cocktail Receipt</string>
+    <string name="new_cocktail_ingredients">Ingredients</string>
+    <string name="new_cocktail_finish">Finish Cocktail !</string>
+    <string name="new_cocktail_add_ingredient">Add Ingredient...</string>
+    <string name="new_cocktail_add_image">Introduce the image url</string>
+    <string name="new_cocktail_url">url...</string>
+    <string name="ok">Accept</string>
+    <string name="new_cocktail_name_required">The cocktail name is required</string>
+    <string name="new_cocktail_url_required">The cocktail image URL is required</string>
+    <string name="new_cocktail_description_required">The cocktail description is required</string>
+    <string name="new_cocktail_receipt_required">The cocktail receipt is required</string>
+    <string name="new_cocktail_added">NEW COCKTAIL ADDED!</string>
 
 </resources>

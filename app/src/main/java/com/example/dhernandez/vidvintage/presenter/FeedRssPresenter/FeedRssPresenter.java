@@ -47,17 +47,17 @@ public class FeedRssPresenter extends ViewModel implements IFeedRssPresenter {
         this.isFavourite = new MutableLiveData<>();
         this.showFeedReadError.setValue(false);
 
-        //urlString = "https://www.reddit.com/r/cocktails/.rss";
+        urlString = "https://www.reddit.com/r/cocktails/.rss";
         //urlString = "http://www.europapress.es/rss/rss.aspx?ch=00564";
-        urlString = "http://rss.cnn.com/rss/edition_sport.rss";
+        //urlString = "http://rss.cnn.com/rss/edition_sport.rss";
         //urlString = "https://www.cocacolaespana.es/Feeds/standard-rss-feed.xml";
         //urlString = "https://www.nasa.gov/rss/dyn/educationnews.rss";
         //urlString = "https://www.abarabove.com/blog/feed";
-        //urlString = "https://www.reddit.com/r/cocktails/.rss";
+        //urlString = "https://www.feedspot.com/?followfeedid=4709022";
         urlString = "http://imbibemagazine.com/category/article/cocktails-spirits-article/feed";
-        urlString = "http://feeds.bbci.co.uk/news/world/rss.xml";
-        urlString = "http://rss.cnn.com/rss/edition.rss";
-        urlString = "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml";
+        //urlString = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        //urlString = "http://rss.cnn.com/rss/edition.rss";
+        //urlString = "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml";
         readFeed();
     }
 

@@ -1,22 +1,22 @@
 package com.example.dhernandez.vidvintage.ui.Fragments;
 
-import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +27,11 @@ import com.example.dhernandez.vidvintage.BuildConfig;
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Adapters.ArticlesAdapter;
 import com.example.dhernandez.vidvintage.Utils.Adapters.CocktailsAdapter;
+import com.example.dhernandez.vidvintage.Utils.Adapters.NewCocktailIngredientsAdapter;
 import com.example.dhernandez.vidvintage.Utils.Constants;
-import com.example.dhernandez.vidvintage.Utils.NewProfilePicture;
+import com.example.dhernandez.vidvintage.Utils.CustomImageView;
+import com.example.dhernandez.vidvintage.Utils.DialogFragments.NewCocktailImageURLDialog;
+import com.example.dhernandez.vidvintage.Utils.DialogFragments.NewProfilePictureDialog;
 import com.example.dhernandez.vidvintage.entity.ArticleVO;
 import com.example.dhernandez.vidvintage.entity.CocktailVO;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
@@ -37,6 +40,7 @@ import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.IProfilePresenter;
 import com.example.dhernandez.vidvintage.presenter.ProfilePresenter.ProfilePresenter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,6 +66,8 @@ public class ProfileFragment extends Fragment {
     RecyclerView profileArticlesRecyclerView;
     @BindView(R.id.profile_cocktails_recyclerview)
     RecyclerView profileCocktailRecyclerView;
+    @BindView(R.id.new_cocktail_process)
+    View newCocktailSection;
 
     @BindView(R.id.profile_menu_users)
     LinearLayout usersMenu;
@@ -90,17 +96,43 @@ public class ProfileFragment extends Fragment {
     View noCocktails;
     @BindView(R.id.no_articles_view)
     View noArticles;
-    @BindView(R.id.new_cocktail_section)
-    View newSection;
+
     @BindView(R.id.profile_holder_name)
     TextView profileName;
 
+    @BindView(R.id.new_cocktail_next_button)
+    CustomImageView nextButton;
+    @BindView(R.id.new_cocktail_back_button)
+    CustomImageView backButton;
+
+    @BindView(R.id.new_cocktail_name)
+    TextInputEditText newCocktailName;
+    @BindView(R.id.new_cocktail_image)
+    CustomImageView newCocktailPhotoUrl;
+    @BindView(R.id.new_cocktail_description)
+    TextInputEditText newCocktailDescription;
+    @BindView(R.id.new_cocktail_receipt)
+    TextInputEditText newCocktailReceipt;
+    @BindView(R.id.new_cocktail_add_ingredient_name)
+    EditText newIngredientName;
+
+    @BindView(R.id.new_cocktail_step_1)
+    View newCocktailStep1;
+    @BindView(R.id.new_cocktail_step_2)
+    View newCocktailStep2;
+    @BindView(R.id.new_cocktail_step_3)
+    View newCocktailStep3;
+    @BindView(R.id.new_cocktail_ingredients_rv)
+    RecyclerView newCocktailIngredientsRV;
+
+
+    private NewCocktailIngredientsAdapter ingredientsAdapter;
     private ArticlesAdapter articlesAdapter;
     private CocktailsAdapter cocktailsAdapter;
 
     int activeColor;
     int inactiveColor;
-    private NewProfilePicture newProfilePicture;
+    private NewProfilePictureDialog newProfilePictureDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,7 +156,79 @@ public class ProfileFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         initMenu();
+        loadUserName();
 
+        loadPresentersListeners(container);
+        loadNewCocktailListeners();
+        loadNewCocktailRecyclerView();
+
+        return view;
+    }
+
+    private void loadNewCocktailRecyclerView() {
+        ingredientsAdapter = new NewCocktailIngredientsAdapter(presenter);
+
+        newCocktailIngredientsRV.setAdapter(ingredientsAdapter);
+        newCocktailIngredientsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void loadNewCocktailListeners() {
+        newCocktailName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                presenter.getNewCocktailName().setValue(editable.toString());
+            }
+        });
+        newCocktailPhotoUrl.setOnClickListener((click) -> {
+            NewCocktailImageURLDialog newCocktailURL = new NewCocktailImageURLDialog(presenter);
+            newCocktailURL.setCancelable(false);
+            newCocktailURL.show(getActivity().getSupportFragmentManager(), null);
+        });
+        newCocktailDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                presenter.getNewCocktailDescription().setValue(editable.toString());
+            }
+        });
+        newCocktailReceipt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                presenter.getNewCocktailReceipt().setValue(editable.toString());
+            }
+        });
+    }
+
+    private void loadPresentersListeners(ViewGroup container) {
         presenter.getActiveSection().observe(this, subSection -> {
             switch (subSection) {
                 case ARTICLES:
@@ -134,14 +238,13 @@ public class ProfileFragment extends Fragment {
                     showCocktails();
                     break;
                 case NEW_COCKTAIL:
-                    showNewCocktail();
+                    showNewCocktailSection();
                     break;
                 default:
                     showArticles();
                     break;
             }
         });
-
         presenter.getFavouriteArticles().observe(this,
                 articles -> {
                     if (articles != null) {
@@ -152,7 +255,6 @@ public class ProfileFragment extends Fragment {
                         articlesNumber.setText("-");
                     }
                 });
-
         presenter.getFavouriteCocktails().observe(this,
                 cocktails -> {
                     if (cocktails != null) {
@@ -162,7 +264,22 @@ public class ProfileFragment extends Fragment {
                         cocktailsNumber.setText("-");
                     }
                 });
-
+        presenter.getNewCocktailStep().observe(this, step -> {
+            switch (step) {
+                case ONE:
+                    newCocktailStepOne();
+                    break;
+                case TWO:
+                    newCocktailStepTwo();
+                    break;
+                case THREE:
+                    newCocktailStepThree();
+                    break;
+                default:
+                    newCocktailStepOne();
+                    break;
+            }
+        });
         mainPresenter.getNavigateTo().observe(this, screen -> {
             if (screen != null) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -179,7 +296,6 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-
         presenter.getProfilePicture().observe(this, pictureProfile -> {
             if (pictureProfile != null) {
                 this.profilePicture.setImageBitmap(pictureProfile);
@@ -187,22 +303,79 @@ public class ProfileFragment extends Fragment {
                 presenter.saveProfilePicture(mAuth.getCurrentUser().getEmail());
             }
         });
+        presenter.getNewCocktailURL().observe(this, url -> {
+            if (url != null && !url.isEmpty())
+                Picasso.get().load(url.trim()).into(newCocktailPhotoUrl);
+        });
+        presenter.getUsername().observe(this, firebaseUser -> profileName.setText(firebaseUser.getEmail()));
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        profileName.setText(mAuth.getCurrentUser().getEmail());
+        presenter.getShowError().observe(this, errorInfo -> {
+            if (errorInfo != null) {
+                Toast.makeText(getContext(), getString(errorInfo),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        return view;
+        presenter.getCleanFields().observe(this, cleanFields ->{
+            if(cleanFields != null){
+                resetNewCocktailFields();
+            }
+        });
+
     }
 
-    private void showNewCocktail() {
+    private void resetNewCocktailFields() {
+        this.newCocktailName.setText(null);
+        this.newCocktailName.setHint(R.string.new_cocktail_name);
 
+        this.newCocktailDescription.setText(null);
+        this.newCocktailDescription.setHint(R.string.new_cocktail_description);
+
+        this.newCocktailReceipt.setText(null);
+        this.newCocktailReceipt.setHint(R.string.new_cocktail_receipt);
+    }
+
+    private void loadUserName() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        presenter.getUsername().setValue(mAuth.getCurrentUser());
+    }
+
+    private void newCocktailStepOne() {
+        backButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.VISIBLE);
+        newCocktailStep1.setVisibility(View.VISIBLE);
+        newCocktailStep2.setVisibility(View.GONE);
+        newCocktailStep3.setVisibility(View.GONE);
+    }
+
+    private void newCocktailStepTwo() {
+        backButton.setVisibility(View.VISIBLE);
+        nextButton.setVisibility(View.VISIBLE);
+        newCocktailStep1.setVisibility(View.GONE);
+        newCocktailStep2.setVisibility(View.VISIBLE);
+        newCocktailStep3.setVisibility(View.GONE);
+    }
+
+    private void newCocktailStepThree() {
+        backButton.setVisibility(View.VISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        newCocktailStep1.setVisibility(View.GONE);
+        newCocktailStep2.setVisibility(View.GONE);
+        newCocktailStep3.setVisibility(View.VISIBLE);
+    }
+
+    private void showNewCocktailSection() {
+        //Subsections views
         this.profileCocktailRecyclerView.setVisibility(View.GONE);
         this.profileArticlesRecyclerView.setVisibility(View.GONE);
-        this.newSection.setVisibility(View.VISIBLE);
+        this.newCocktailSection.setVisibility(View.VISIBLE);
+
+        //Icons of the subsection menu
         this.addNewSection.setColorFilter(activeColor);
         this.articlesSection.setColorFilter(inactiveColor);
         this.cocktailsSection.setColorFilter(inactiveColor);
 
+        //Default images when there is no articles or cocktails in memory
         this.noArticles.setVisibility(View.GONE);
         this.noCocktails.setVisibility(View.GONE);
 
@@ -211,13 +384,14 @@ public class ProfileFragment extends Fragment {
     private void showCocktails() {
         this.profileCocktailRecyclerView.setVisibility(View.VISIBLE);
         this.profileArticlesRecyclerView.setVisibility(View.GONE);
+        this.newCocktailSection.setVisibility(View.GONE);
+
         this.cocktailsSection.setColorFilter(activeColor);
         this.articlesSection.setColorFilter(inactiveColor);
         this.addNewSection.setColorFilter(inactiveColor);
         this.usersArticlesSection.setColorFilter(inactiveColor);
         this.usersCocktailsSection.setColorFilter(activeColor);
 
-        this.newSection.setVisibility(View.GONE);
         this.noArticles.setVisibility(View.GONE);
 
         if (presenter.getFavouriteCocktails().getValue() != null
@@ -232,6 +406,8 @@ public class ProfileFragment extends Fragment {
     private void showArticles() {
         this.profileCocktailRecyclerView.setVisibility(View.GONE);
         this.profileArticlesRecyclerView.setVisibility(View.VISIBLE);
+        this.newCocktailSection.setVisibility(View.GONE);
+
         this.articlesSection.setColorFilter(activeColor);
 
         this.cocktailsSection.setColorFilter(inactiveColor);
@@ -240,7 +416,6 @@ public class ProfileFragment extends Fragment {
         this.usersCocktailsSection.setColorFilter(inactiveColor);
 
         this.noCocktails.setVisibility(View.GONE);
-        this.newSection.setVisibility(View.GONE);
 
         if (presenter.getFavouriteArticles().getValue() != null
                 && presenter.getFavouriteArticles().getValue().isEmpty()) {
@@ -291,9 +466,9 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.profile_holder_picture)
     public void onProfilePictureClick() {
-        newProfilePicture = new NewProfilePicture(presenter);
-        newProfilePicture.setCancelable(false);
-        newProfilePicture.show(getActivity().getFragmentManager(), null);
+        newProfilePictureDialog = new NewProfilePictureDialog(presenter);
+        newProfilePictureDialog.setCancelable(true);
+        newProfilePictureDialog.show(getActivity().getFragmentManager(), null);
     }
 
     @OnClick({R.id.profile_menu_articles, R.id.profile_menu_users_articles})
@@ -308,8 +483,8 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.profile_menu_new_cocktail)
     public void onNewCocktailClick() {
-        presenter.addNewCocktail();
-        //presenter.getActiveSection().setValue(Constants.SubSections.NEW_COCKTAIL);
+        //presenter.addNewCocktail();
+        presenter.getActiveSection().setValue(Constants.SubSections.NEW_COCKTAIL);
     }
 
     @OnClick(R.id.no_articles_view)
@@ -328,4 +503,29 @@ public class ProfileFragment extends Fragment {
         presenter.refreshFavourites();
         showArticles();
     }
+
+    @OnClick(R.id.new_cocktail_back_button)
+    public void onNewCocktailBackClick() {
+        presenter.onNewCocktailBackClick();
+    }
+
+    @OnClick(R.id.new_cocktail_next_button)
+    public void onNewCocktailNextClick() {
+        presenter.onNewCocktailNextClick();
+    }
+
+    @OnClick(R.id.new_cocktail_add_ingredient_button)
+    public void onNewIngredientClick() {
+        presenter.addNewIngredient(this.newIngredientName.getText().toString());
+        this.newIngredientName.setText(null);
+        this.newIngredientName.setHint(R.string.new_cocktail_add_ingredient);
+        this.ingredientsAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.new_cocktail_finish)
+    public void onAddNewCocktail() {
+        presenter.addNewCocktail();
+    }
+
 }
+

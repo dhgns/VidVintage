@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.dhernandez.vidvintage.R;
 import com.example.dhernandez.vidvintage.Utils.Constants;
-import com.example.dhernandez.vidvintage.Utils.PreferencesDialog;
+import com.example.dhernandez.vidvintage.Utils.DialogFragments.PreferencesDialog;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.IMainPresenter;
 import com.example.dhernandez.vidvintage.presenter.MainPresenter.MainPresenter;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;

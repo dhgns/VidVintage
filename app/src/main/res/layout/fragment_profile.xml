@@ -144,54 +144,59 @@
         android:id="@+id/profile_menu_locals"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
         android:background="@drawable/bg_profile_menu"
-        android:visibility="gone">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:background="@drawable/sub_menu_bg_der"
             android:gravity="center"
-            android:background="@drawable/sub_menu_bg_der">
+            android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/profile_menu_articles"
-                android:background="@color/transparent"
-                android:src="@drawable/article"
-                android:scaleType="fitXY"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@drawable/sub_menu_bg_der">
-            <ImageButton
-                android:id="@+id/profile_menu_cocktails"
-                android:background="@color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/cocktail_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@color/app_bg">
-            <ImageButton
-                android:id="@+id/profile_menu_new_cocktail"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_add"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/transparent"/>
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/article" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/sub_menu_bg_der"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/profile_menu_cocktails"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/cocktail_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/app_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/profile_menu_new_cocktail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_add" />
         </LinearLayout>
 
     </LinearLayout>
@@ -200,40 +205,42 @@
         android:id="@+id/profile_menu_users"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@drawable/bg_profile_menu"
         android:orientation="horizontal"
-        android:visibility="visible"
-        android:background="@drawable/bg_profile_menu">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:background="@drawable/sub_menu_bg_der"
             android:gravity="center"
-            android:background="@drawable/sub_menu_bg_der">
+            android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/profile_menu_users_articles"
-                android:background="@color/transparent"
-                android:src="@drawable/article"
-                android:scaleType="fitXY"
                 android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/article" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:background="@color/app_bg"
             android:gravity="center"
-            android:background="@color/app_bg">
+            android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/profile_menu_users_cocktails"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/cocktail_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:src="@drawable/cocktail_icon" />
         </LinearLayout>
 
     </LinearLayout>
@@ -243,7 +250,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profile_cocktails_recyclerview"
@@ -263,7 +270,8 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -273,26 +281,29 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <com.example.dhernandez.vidvintage.Utils.CustomImageView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:src="@drawable/cocktail_illustration" />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:text="@string/no_cocktails_yet"
             android:layout_gravity="center"
-            android:fontFamily="@font/kaushanscript_regular"/>
+            android:layout_weight="1"
+            android:fontFamily="@font/kaushanscript_regular"
+            android:padding="5dp"
+            android:text="@string/no_cocktails_yet"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -307,7 +318,8 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -317,70 +329,245 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <com.example.dhernandez.vidvintage.Utils.CustomImageView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:src="@drawable/no_articles" />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:text="@string/no_articles_yet"
             android:layout_gravity="center"
-            android:fontFamily="@font/kaushanscript_regular"/>
+            android:layout_weight="1"
+            android:fontFamily="@font/kaushanscript_regular"
+            android:padding="5dp"
+            android:text="@string/no_articles_yet"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/new_cocktail_section"
+        android:id="@+id/new_cocktail_process"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-            <com.example.dhernandez.vidvintage.Utils.CustomImageView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:src="@drawable/new_cocktail_section" />
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:text="@string/new_cocktail_section"
+        <com.example.dhernandez.vidvintage.Utils.CustomImageView
+            android:id="@+id/new_cocktail_back_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:fontFamily="@font/kaushanscript_regular"/>
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            android:src="@drawable/back_button_icon" />
+
+        <LinearLayout
+            android:id="@+id/new_cocktail_step_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <com.example.dhernandez.vidvintage.Utils.CustomImageView
+                android:id="@+id/new_cocktail_image"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/image_icon"
+                android:background="@drawable/article_detail_bg"
+                android:elevation="5dp"
+                android:fontFamily="@font/kaushanscript_regular"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:padding="5dp"
+                android:text="@string/new_cocktail_description"
+                android:textSize="20sp" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_cocktail_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/article_detail_bg"
+                android:elevation="5dp"
+                android:fontFamily="@font/kaushanscript_regular"
+                android:gravity="center"
+                android:padding="5dp"
+                android:hint="@string/new_cocktail_name"
+                android:textSize="20sp"
+                android:maxLines="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/new_cocktail_step_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="8"
+            android:paddingBottom="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_cocktail_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/article_detail_bg"
+                android:elevation="5dp"
+                android:fontFamily="@font/kaushanscript_regular"
+                android:gravity="center"
+                android:padding="5dp"
+                android:hint="@string/new_cocktail_description"
+                android:textSize="20sp" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/new_cocktail_receipt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/article_detail_bg"
+                android:elevation="5dp"
+                android:fontFamily="@font/kaushanscript_regular"
+                android:gravity="center"
+                android:padding="5dp"
+                android:hint="@string/new_cocktail_receipt"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/new_cocktail_step_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/new_cocktail_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="4"
+                android:background="@drawable/article_detail_bg"
+                android:elevation="5dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_cocktail_ingredients"
+                    android:fontFamily="@font/kaushanscript_regular"
+                    android:textSize="18sp"
+                    android:paddingEnd="8dp"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/new_cocktail_add_ingredient_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="5dp"
+                        android:fontFamily="@font/kaushanscript_regular"
+                        android:hint="@string/new_cocktail_add_ingredient"/>
+
+                    <com.example.dhernandez.vidvintage.Utils.CustomImageView
+                        android:id="@+id/new_cocktail_add_ingredient_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/new_cocktail_icon_add"
+                        android:background="@color/transparent"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/new_cocktail_ingredients_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/new_cocktail_finish"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/article_detail_bg"
+                android:fontFamily="@font/kaushanscript_regular"
+                android:gravity="center"
+                android:text="@string/new_cocktail_finish"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <com.example.dhernandez.vidvintage.Utils.CustomImageView
+            android:id="@+id/new_cocktail_next_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/next_button_icon" />
 
     </LinearLayout>
 
 </LinearLayout>
+
+

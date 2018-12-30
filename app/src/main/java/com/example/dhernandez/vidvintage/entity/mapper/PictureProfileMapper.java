@@ -1,8 +1,9 @@
-package com.example.dhernandez.vidvintage.Utils;
+package com.example.dhernandez.vidvintage.entity.mapper;
 
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import com.example.dhernandez.vidvintage.Utils.ImageUtil;
 import com.example.dhernandez.vidvintage.entity.DAO.PictureProfileDAO;
 
 import java.io.ByteArrayOutputStream;

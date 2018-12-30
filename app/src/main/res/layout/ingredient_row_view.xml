@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/ingredient_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:fontFamily="@font/kaushanscript_regular"
+        android:textSize="16sp"/>
+
+    <com.example.dhernandez.vidvintage.Utils.CustomImageView
+        android:id="@+id/remove_ingredient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/new_cocktail_icon_remove"/>
+
+</LinearLayout>

@@ -95,6 +95,7 @@ public class ArticleDetailFragment extends Fragment {
             }
             favArticle.setImageDrawable(favIcon);
         });
+
         return view;
 
     }

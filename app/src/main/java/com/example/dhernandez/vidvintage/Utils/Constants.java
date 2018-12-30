@@ -13,4 +13,5 @@ public class Constants {
     public static final String FULL_SCREEN_KEY = "app_full_screen";
     public static final String USER = "user_session";
 
+    public enum Steps { ONE, TWO, THREE}
 }

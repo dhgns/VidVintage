@@ -210,7 +210,8 @@ public class LoginActivity extends AppCompatActivity{
             presenter.doEmailLogin();
         else {
             showProgress(true);
-            mAuth.signInWithEmailAndPassword("dhg1994@hotmail.com","12341234")
+            mAuth.signInWithEmailAndPassword(mEmailField.getText().toString(), mPasswordField.getText().toString())
+            //mAuth.signInWithEmailAndPassword("dhg1994@hotmail.com","12341234")
                     //mAuth.signInWithEmailAndPassword(mEmailField.getText().toString(), mPasswordField.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

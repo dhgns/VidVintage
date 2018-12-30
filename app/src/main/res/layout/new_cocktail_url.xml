@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="35dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:fontFamily="@font/kaushanscript_regular"
+        android:text="@string/new_cocktail_add_image"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"/>
+
+    <EditText
+        android:id="@+id/new_cocktail_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_cocktail_url"
+        android:maxLines="1"
+        android:fontFamily="@font/kaushanscript_regular"/>
+
+    <Button
+        android:id="@+id/new_cocktail_dismiss_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:fontFamily="@font/kaushanscript_regular"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
