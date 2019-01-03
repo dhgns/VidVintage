@@ -57,6 +57,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904914835243:android:d60ec2e43f561742",
+        "android_client_info": {
+          "package_name": "upsa.mimo.delfin.vdvintage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904914835243-3v25arplho64h5c15f4eq3utmltgk54n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSFp56jRxwBQbngn_t4-4KB5HoaeAo1Bc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

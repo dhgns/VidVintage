@@ -8,14 +8,11 @@ import android.content.res.AssetManager;
 import com.example.dhernandez.vidvintage.BuildConfig;
 import com.example.dhernandez.vidvintage.application.MyApplication;
 import com.example.dhernandez.vidvintage.presenter.PresenterFactory;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
+import java.net.HttpURLConnection;
 import java.security.cert.CertificateException;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -28,7 +25,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -104,6 +100,7 @@ public class ApplicationModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
+
 
     @Provides
     @Singleton

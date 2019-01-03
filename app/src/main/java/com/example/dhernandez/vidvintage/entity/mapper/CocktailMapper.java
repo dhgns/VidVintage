@@ -73,6 +73,7 @@ public class CocktailMapper {
             tags.add(tag);
         }
         item.setTags(tags);
+        item.setDescription(value.getDescription());
         item.setUrlPhoto(value.getUrlPhoto());
         item.setLikes(value.getLikes());
         item.setReceipt(value.getReceipt());
@@ -115,7 +116,7 @@ public class CocktailMapper {
         item.setName(value.getName());
         item.setUrlVideo(value.getUrlVideo());
         item.setIngredients(com.example.dhernandez.vidvintage.entity.mapper.IngredientsMapper.mapperDAOtoVO(value.getIngredients()));
-
+        item.setDescription(value.getDescription());
         return item;
     }
 

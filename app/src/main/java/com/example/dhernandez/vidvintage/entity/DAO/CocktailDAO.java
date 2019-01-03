@@ -45,6 +45,8 @@ public class CocktailDAO extends RealmObject{
     Integer likes;
     @SerializedName("url")
     String cocktailUrl;
+    @SerializedName("description")
+    String description;
 
     @PrimaryKey
     String id;
