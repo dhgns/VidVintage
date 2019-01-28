@@ -55,5 +55,7 @@
     <string name="new_cocktail_description_required">The cocktail description is required</string>
     <string name="new_cocktail_receipt_required">The cocktail receipt is required</string>
     <string name="new_cocktail_added">NEW COCKTAIL ADDED!</string>
+    <string name="invaid_mail">Please, set a valid mail</string>
+    <string name="invalid_password">Please, set a valid password (at least 8 characters)</string>
 
 </resources>

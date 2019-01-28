@@ -316,8 +316,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        presenter.getCleanFields().observe(this, cleanFields ->{
-            if(cleanFields != null){
+        presenter.getCleanFields().observe(this, cleanFields -> {
+            if (cleanFields != null) {
                 resetNewCocktailFields();
             }
         });

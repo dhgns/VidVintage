@@ -15,8 +15,8 @@ import com.example.dhernandez.vidvintage.repository.LocalStorageRepository.ILoca
 public class LoginPresenter extends ViewModel implements ILoginPresenter {
 
     private final MutableLiveData<UserPreferences> loadedPreferences;
-    private String email;
-    private String password;
+    private MutableLiveData<String> emailMLD;
+    private MutableLiveData<String> passwordMLD;
 
     private MutableLiveData<Boolean> mailError;
     private MutableLiveData<Boolean> passwordError;
@@ -49,6 +49,8 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter {
         this.showProgress = new MutableLiveData<>();
         this.passwordError = new MutableLiveData<>();
         this.mailError = new MutableLiveData<>();
+        this.emailMLD = new MutableLiveData();
+        this.passwordMLD = new MutableLiveData<>();
 
         this.mailError.setValue(false);
         this.passwordError.setValue(false);
@@ -59,12 +61,12 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter {
     }
 
     @Override
-    public MutableLiveData<Boolean> getFullScreen(){
+    public MutableLiveData<Boolean> getFullScreen() {
         return this.fullScreen;
     }
 
     @Override
-    public MutableLiveData<Constants.Themes> getAppTheme(){
+    public MutableLiveData<Constants.Themes> getAppTheme() {
         return this.appTheme;
     }
 
@@ -74,13 +76,13 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter {
     }
 
     @Override
-    public void setEmail(String email) {
-        this.email = email;
+    public MutableLiveData<String> getEmailLD() {
+        return this.emailMLD;
     }
 
     @Override
-    public void setPassword(String password) {
-        this.password = password;
+    public MutableLiveData<String> getPasswordLD() {
+        return this.passwordMLD;
     }
 
     @Override
@@ -130,14 +132,19 @@ public class LoginPresenter extends ViewModel implements ILoginPresenter {
         this.showProgress.setValue(true);
     }
 
+    @Override
+    public MutableLiveData<Boolean> getShowProgress() {
+        return showProgress;
+    }
+
     private boolean isValidateForm() {
 
-        if (email == null || email.equals("")) {
+        if (emailMLD == null || emailMLD.equals("")) {
             this.mailError.setValue(true);
             return false;
         }
 
-        if (password == null || password.equals("")) {
+        if (passwordMLD == null || passwordMLD.equals("")) {
             this.passwordError.setValue(true);
             return false;
         }

@@ -45,7 +45,7 @@ import static com.example.dhernandez.vidvintage.Utils.Constants.Screens.MAIN;
  * Created by dhernandez on 30/08/2018.
  */
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     @Inject
     PresenterFactory presenterFactory;
@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity{
 
         mAuth = FirebaseAuth.getInstance();
 
-
         this.presenter = ViewModelProviders.of(this, presenterFactory).get(LoginPresenter.class);
 
         mEmailField.addTextChangedListener(new TextWatcher() {
@@ -108,7 +107,7 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
-                presenter.setEmail(editable.toString());
+                presenter.getEmailLD().setValue(editable.toString());
             }
         });
         mPasswordField.addTextChangedListener(new TextWatcher() {
@@ -124,15 +123,16 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
-                presenter.setPassword(editable.toString());
+                presenter.getPasswordLD().setValue(editable.toString());
             }
         });
 
+        presenter.getShowProgress().observe(this, this::showProgress);
         presenter.getShowLoginError().observe(this, this::showLoginError);
         presenter.getShowFormFields().observe(this, this::showEmailLogin);
-        presenter.getNavigateTo().observe(this, screen ->{
-            if(screen != null){
-                switch (screen){
+        presenter.getNavigateTo().observe(this, screen -> {
+            if (screen != null) {
+                switch (screen) {
                     case MAIN:
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity{
 
     private void setAppTheme(Constants.Themes theme) {
         Drawable bg;
-        switch (theme){
+        switch (theme) {
             case DARK:
                 bg = getResources().getDrawable(R.drawable.cocktail_menu_item_bg);
                 break;
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void setFullScreen(Boolean fullScreen) {
-        if(fullScreen)
+        if (fullScreen)
             this.hideSystemUI();
         else
             this.showSystemUI();
@@ -172,21 +172,21 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void showLoginError(Boolean showError) {
-        if(showError){
+        if (showError) {
             Toast.makeText(getApplicationContext(), "Authentication failed.",
                     Toast.LENGTH_SHORT).show();
         }
     }
 
     private void showEmailLogin(Boolean showLogin) {
-        if(showLogin){
+        if (showLogin) {
             fbLoginButtonFalse.setVisibility(View.GONE);
             mEmailField.setVisibility(View.VISIBLE);
             mPasswordField.setVisibility(View.VISIBLE);
             createAccountButton.setVisibility(View.VISIBLE);
             splitView.setVisibility(View.GONE);
             emailLoginButton.setText(R.string.login_active_text);
-        }else{
+        } else {
             fbLoginButtonFalse.setVisibility(View.VISIBLE);
             splitView.setVisibility(View.VISIBLE);
             mEmailField.setVisibility(View.GONE);
@@ -198,20 +198,23 @@ public class LoginActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(mEmailField.getVisibility() == View.VISIBLE)
+        if (mEmailField.getVisibility() == View.VISIBLE)
             showEmailLogin(false);
         else
             super.onBackPressed();
     }
 
     @OnClick(R.id.email_sign_in_button)
-    public void onClickMailLogin(){
-        if(mEmailField.getVisibility()== View.GONE)
+    public void onClickMailLogin() {
+        if (!formIsValid()) {
+            return;
+        }
+        if (mEmailField.getVisibility() == View.GONE)
             presenter.doEmailLogin();
         else {
             showProgress(true);
             mAuth.signInWithEmailAndPassword(mEmailField.getText().toString(), mPasswordField.getText().toString())
-            //mAuth.signInWithEmailAndPassword("dhg1994@hotmail.com","12341234")
+                    //mAuth.signInWithEmailAndPassword("dhg1994@hotmail.com","12341234")
                     //mAuth.signInWithEmailAndPassword(mEmailField.getText().toString(), mPasswordField.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -232,10 +235,9 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     @OnClick(R.id.email_create_account_button)
-    public void onClickSignUp(){
-        if(formIsValid()) {
+    public void onClickSignUp() {
+        if (formIsValid()) {
             presenter.onSignUp();
-
             mAuth.createUserWithEmailAndPassword(
                     mEmailField.getText().toString(),
                     mPasswordField.getText().toString())
@@ -259,14 +261,14 @@ public class LoginActivity extends AppCompatActivity{
 
     private boolean formIsValid() {
 
-        if(mEmailField.getVisibility() == View.VISIBLE &&
+        if (mEmailField.getVisibility() == View.VISIBLE &&
                 !mEmailField.getText().toString().isEmpty() &&
-                !mPasswordField.getText().toString().isEmpty()){
+                !mPasswordField.getText().toString().isEmpty()) {
             return true;
-        }else if(mEmailField.getText().toString().isEmpty()){
-            mEmailField.setError("Incorrect mail");
-        }else if(mPasswordField.getText().toString().isEmpty()){
-            mPasswordField.setError("Incorrect password");
+        } else if (mEmailField.getText().toString().isEmpty()) {
+            mEmailField.setError(getString(R.string.invaid_mail));
+        } else if (mPasswordField.getText().toString().isEmpty()) {
+            mPasswordField.setError(getString(R.string.invalid_password));
         }
         return false;
 

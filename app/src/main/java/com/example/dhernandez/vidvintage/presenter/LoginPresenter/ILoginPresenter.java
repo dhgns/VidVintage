@@ -1,6 +1,5 @@
 package com.example.dhernandez.vidvintage.presenter.LoginPresenter;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.example.dhernandez.vidvintage.Utils.Constants;
@@ -12,19 +11,24 @@ import com.example.dhernandez.vidvintage.Utils.Constants;
 public interface ILoginPresenter {
 
     MutableLiveData<Boolean> getFullScreen();
+
     MutableLiveData<Constants.Themes> getAppTheme();
 
     MutableLiveData<Boolean> getShowLoginError();
 
-    public void setEmail(String email);
-    public void setPassword(String password);
+
+    MutableLiveData<String> getEmailLD();
+
+    MutableLiveData<String> getPasswordLD();
 
     MutableLiveData<Boolean> getMailError();
 
     MutableLiveData<Boolean> getPasswordError();
 
     void doFBLogin();
+
     void doSignUp();
+
     void doEmailLogin();
 
     MutableLiveData<Boolean> getShowFBLogin();
@@ -34,4 +38,6 @@ public interface ILoginPresenter {
     MutableLiveData<Constants.Screens> getNavigateTo();
 
     void onSignUp();
+
+    MutableLiveData<Boolean> getShowProgress();
 }
